@@ -1,125 +1,115 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA - VINTAGE BLACK METAL</title>
+<title>ANTISIA STORE - OFFICIAL</title>
 
 <style>
-  /* 1. SCROLLBAR USANG */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #050505; }
-  ::-webkit-scrollbar-thumb { background: #1a1a1a; border: 1px solid #000; }
+  /* 1. SCROLLBAR MINIMALIS */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #1a1a1a; }
   
-  /* 2. BODY: HITAM DOFF DENGAN GRAIN TEXTURE */
+  /* 2. ATMOSPHERE DARK ELEGANCE */
   body {
     margin: 0; padding: 0;
-    background-color: #0a0a0a; /* Hitam Doff */
-    /* Tekstur Grain/Noise Vintage */
-    background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); 
+    background: radial-gradient(circle, #111 0%, #000 100%);
     background-attachment: fixed;
-    color: #d1d1d1; /* Putih pudar (off-white) agar tidak terlalu kontras */
-    font-family: 'Georgia', serif; /* Font klasik tajam */
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
     text-align: center;
-    overflow-x: hidden;
   }
 
-  /* Efek Vignette (Garis Gelap di Pinggiran) */
-  body::before {
-    content: "";
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
-    pointer-events: none; z-index: 10;
-  }
-
-  /* 3. HEADER LOGO */
+  /* 3. HEADER LOGO RAMPING */
   .logo-header { 
-    padding: 20px 0;
-    position: sticky; top: 0; 
-    background: rgba(10,10,10,0.95); 
-    backdrop-filter: blur(5px);
+    padding: 15px 20px;
+    position: sticky; 
+    top: 0; 
+    background: rgba(0,0,0,0.9); 
+    backdrop-filter: blur(10px);
     z-index: 900;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .logo-header img { 
-    max-width: 240px; width: 60%; height: auto; 
-    filter: sepia(0.3) grayscale(0.5); /* Efek logo agak usang */
+    max-width: 250px;
+    width: 65%;
+    height: auto; 
+    display: block;
+    margin: 0 auto;
   }
 
-  /* 4. MAIN LANDING */
-  #main-landing { padding: 50px 20px; position: relative; z-index: 5; }
-  
+  /* 4. HALAMAN 1: MAIN LANDING */
+  #main-landing { padding: 50px 20px 80px 20px; animation: fadeIn 1.5s forwards; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
   .hero-img {
-    max-width: 450px; width: 90%;
-    border: 1px solid #1a1a1a;
-    filter: grayscale(0.2) contrast(1.1); /* Efek foto lebih kontras & dingin */
-    cursor: pointer;
-    transition: 0.5s;
-  }
-  .hero-img:hover { border-color: #444; filter: grayscale(0); }
-
-  .price-tag { margin-top: 35px; }
-  .price-idr { 
-    font-size: 26px; font-weight: normal; 
-    letter-spacing: 10px; display: block; 
-    text-transform: uppercase; 
-  }
-
-  /* 5. TOMBOL CHECK OUT */
-  .btn-wa {
-    display: inline-block;
-    margin-top: 40px;
-    background: transparent;
-    color: #888;
-    padding: 12px 50px;
-    text-decoration: none;
+    max-width: 480px; width: 90%;
     border: 1px solid #222;
-    font-size: 10px;
-    letter-spacing: 6px;
-    text-transform: uppercase;
+    cursor: pointer;
     transition: 0.4s;
   }
-  .btn-wa:hover { 
-    color: #fff; 
-    border-color: #fff; 
-    background: rgba(255,255,255,0.02);
+  .hero-img:hover { border-color: #ff0000; transform: scale(1.01); }
+
+  .price-tag { margin-top: 30px; }
+  .price-idr { font-size: 24px; font-weight: 900; letter-spacing: 5px; display: block; }
+  .price-usd { font-size: 12px; color: #444; display: block; margin-top: 8px; letter-spacing: 2px; }
+
+  /* TOMBOL CHECK OUT */
+  .btn-wa {
+    display: inline-block;
+    margin-top: 35px;
+    background-color: transparent;
+    color: #fff;
+    padding: 15px 45px;
+    text-decoration: none;
+    border: 1px solid #333;
+    font-size: 11px;
+    letter-spacing: 5px;
+    transition: 0.4s;
+    text-transform: uppercase;
   }
+  .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
   .explore-btn {
-    display: block; font-size: 8px; color: #333; margin-top: 45px; 
-    letter-spacing: 12px; cursor: pointer; transition: 0.3s;
+    display: block; font-size: 9px; color: #222; margin-top: 40px; 
+    letter-spacing: 8px; cursor: pointer; transition: 0.3s;
   }
-  .explore-btn:hover { color: #666; }
+  .explore-btn:hover { color: #fff; }
 
-  /* 6. DETAIL GRID */
+  /* 5. HALAMAN 2: DETAIL GRID */
   #detail-grid {
-    display: none; grid-template-columns: repeat(2, 1fr);
-    gap: 15px; padding: 15px; max-width: 900px; margin: 0 auto;
-    z-index: 5; position: relative;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px; padding: 15px;
+    max-width: 900px; margin: 0 auto;
   }
   .btn-back {
-    display: none; background: none; border: none; color: #444; 
-    padding: 20px; font-size: 9px; letter-spacing: 6px; cursor: pointer;
-    z-index: 20; position: relative;
+    display: none; background: none; border: none;
+    color: #444; padding: 20px; cursor: pointer;
+    margin: 15px 0; font-size: 10px; letter-spacing: 5px;
   }
+  .btn-back:hover { color: #fff; }
 
-  .product-card { background: #000; border: 1px solid #111; padding: 5px; cursor: pointer; }
-  .product-card img { width: 100%; filter: grayscale(0.5); }
-  .product-card:hover img { filter: grayscale(0); }
+  .product-card { background: #050505; border: 1px solid #111; padding: 8px; cursor: pointer; }
+  .product-card img { width: 100%; display: block; }
 
-  /* 7. VIEWER */
+  /* 6. POPUP VIEWER ZOOM & DRAG */
   #viewer {
     display: none; position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%; background: #000; z-index: 10000;
+    width: 100%; height: 100%; background: rgba(0,0,0,0.98);
+    z-index: 10000; overflow: hidden; touch-action: none;
   }
-  #imgView { max-width: 85%; max-height: 80vh; transition: transform 0.1s; }
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.3; }
+  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; cursor: grab; }
+  #imgView { max-width: 85%; max-height: 85vh; transition: transform 0.1s ease-out; transform-origin: center; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.4; }
   .ui-btn:hover { opacity: 1; }
   .close-x { top: 10px; right: 10px; }
   .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
   .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
 
-  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } .logo-header img { max-width: 200px; } }
 </style>
 </head>
 <body>
@@ -128,20 +118,25 @@
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
+<!-- HALAMAN 1 -->
 <div id="main-landing">
+  <!-- Klik gambar langsung ke detail -->
   <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
   
   <div class="price-tag">
     <span class="price-idr">IDR 165.000</span>
+    <span class="price-usd">11$ USD</span>
   </div>
 
+  <!-- Tombol WhatsApp dengan nomor koreksi -->
   <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
     CHECK OUT
   </a>
 
-  <span class="explore-btn" onclick="goToDetails()">[ EXPLORE ]</span>
+  <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
+<!-- HALAMAN 2 -->
 <button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO GALLERY</button>
 <div id="detail-grid">
   <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
@@ -150,17 +145,18 @@
   <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
 </div>
 
+<!-- POPUP ZOOM -->
 <div id="viewer">
   <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
   <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
   <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
-  <div class="viewer-wrap" id="dropzone" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
+  <div class="viewer-wrap" id="dropzone">
     <img id="imgView" src="">
   </div>
 </div>
 
 <script>
-  // Logika navigasi kawan
+  // Script navigasi & fungsionalitas kawan
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
   let currentIndex = 0;
   let scale = 1, pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
@@ -203,7 +199,6 @@
     document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
   }
 
-  // Zoom wheel logic kawan
   const viewer = document.getElementById("viewer");
   viewer.onwheel = function(e) {
     e.preventDefault();
@@ -211,6 +206,20 @@
     else scale = Math.min(5, scale + 0.2);
     updateTransform();
   }
+
+  const dropzone = document.getElementById("dropzone");
+  dropzone.onmousedown = function(e) {
+    isDragging = true;
+    startX = e.clientX - pointX;
+    startY = e.clientY - pointY;
+  }
+  window.onmousemove = function(e) {
+    if (!isDragging) return;
+    pointX = e.clientX - startX;
+    pointY = e.clientY - startY;
+    updateTransform();
+  }
+  window.onmouseup = function() { isDragging = false; }
 </script>
 
 </body>
