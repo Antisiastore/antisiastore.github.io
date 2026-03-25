@@ -6,7 +6,7 @@
 <title>ANTISIA STORE - OFFICIAL</title>
 
 <style>
-  /* 1. ATMOSPHERE DASAR */
+  /* 1. DASAR & ATMOSPHERE */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #1a1a1a; }
@@ -20,25 +20,21 @@
     text-align: center;
   }
 
-  /* 2. HEADER LOGO MERAH (VERSI AWAL) */
+  /* 2. HEADER LOGO */
   .logo-header { 
     padding: 15px 20px;
-    position: sticky; 
-    top: 0; 
+    position: sticky; top: 0; 
     background: rgba(0,0,0,0.9); 
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .logo-header img { 
-    max-width: 250px;
-    width: 65%;
-    height: auto; 
-    display: block;
-    margin: 0 auto;
+    max-width: 250px; width: 65%; height: auto; 
+    display: block; margin: 0 auto;
   }
 
-  /* 3. HALAMAN UTAMA: PRODUK */
+  /* 3. HALAMAN 1: LANDING */
   #main-landing { padding: 50px 20px; animation: fadeIn 1.5s forwards; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -68,7 +64,15 @@
   }
   .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
-  /* 4. HALAMAN DETAIL */
+  /* TEKS EXPLORE YANG KEMBALI */
+  .explore-btn {
+    display: block; font-size: 9px; color: #333; margin-top: 40px; 
+    letter-spacing: 8px; cursor: pointer; transition: 0.3s;
+    text-transform: uppercase;
+  }
+  .explore-btn:hover { color: #fff; }
+
+  /* 4. HALAMAN 2: GRID DETAIL */
   #detail-grid {
     display: none;
     grid-template-columns: repeat(2, 1fr);
@@ -79,9 +83,11 @@
     display: none; background: none; border: none;
     color: #444; padding: 20px; cursor: pointer;
     margin: 15px 0; font-size: 10px; letter-spacing: 5px;
+    text-transform: uppercase;
   }
   .btn-back:hover { color: #fff; }
-  .product-card img { width: 100%; border: 1px solid #111; display: block; }
+  .product-card { background: #050505; border: 1px solid #111; padding: 5px; cursor: pointer; }
+  .product-card img { width: 100%; display: block; }
 
   @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
@@ -89,10 +95,10 @@
 <body>
 
 <div class="logo-header">
-  <!-- Pastikan file logo_antisia.png sudah ada lagi di foldermu kawan -->
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
+<!-- HALAMAN 1 -->
 <div id="main-landing">
   <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
   
@@ -103,13 +109,20 @@
   <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
     CHECK OUT
   </a>
+
+  <!-- Teks explore yang sempat hilang kawan -->
+  <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
+<!-- HALAMAN 2 -->
 <button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO CATALOG</button>
 
 <div id="detail-grid">
+  <!-- Daftar 4 gambar dikembalikan di sini kawan -->
   <div class="product-card"><img src="kaos_depan.jpg"></div>
   <div class="product-card"><img src="kaos_belakang.jpg"></div>
+  <div class="product-card"><img src="model_depan.jpg"></div>
+  <div class="product-card"><img src="model_belakang.jpg"></div>
 </div>
 
 <script>
