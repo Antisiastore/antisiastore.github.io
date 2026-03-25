@@ -3,115 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA - DARK ELEGANCE PRO</title>
+<title>ANTISIA STORE - OFFICIAL</title>
 
 <style>
-  /* 1. CUSTOM CURSOR (Biar makin eksklusif) */
-  * { cursor: none; } /* Hilangkan kursor asli */
-  #custom-cursor {
-    width: 8px; height: 8px; background: #ff0000;
-    border-radius: 50%; position: fixed; 
-    pointer-events: none; z-index: 99999;
-    box-shadow: 0 0 10px #ff0000;
-  }
-
-  /* 2. ATMOSPHERE & BACKGROUND */
-  ::-webkit-scrollbar { width: 3px; }
+  /* 1. SCROLLBAR MINIMALIS */
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #1a1a1a; }
-
+  
+  /* 2. ATMOSPHERE INDUSTRIAL ELEGAN */
   body {
     margin: 0; padding: 0;
-    background: radial-gradient(circle, #0d0d0d 0%, #000 100%);
+    background: radial-gradient(circle, #111 0%, #000 100%);
     background-attachment: fixed;
     color: #fff;
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
-    overflow-x: hidden;
   }
 
-  /* 3. LOGO HEADER */
+  /* 3. HEADER LOGO RAMPING */
   .logo-header { 
-    padding: 15px 0;
-    position: sticky; top: 0; 
+    padding: 15px 20px;
+    position: sticky; 
+    top: 0; 
     background: rgba(0,0,0,0.9); 
     backdrop-filter: blur(10px);
-    z-index: 1000;
+    z-index: 900;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-  .logo-header img { max-width: 200px; width: 50%; height: auto; }
+  .logo-header img { 
+    max-width: 250px;
+    width: 65%;
+    height: auto; 
+    display: block;
+    margin: 0 auto;
+  }
 
-  /* 4. HERO SECTION - IMAGE SWAP */
-  #main-landing { padding: 40px 20px; animation: fadeIn 2s forwards; }
+  /* 4. HALAMAN 1: MAIN LANDING */
+  #main-landing { padding: 50px 20px 80px 20px; animation: fadeIn 1.5s forwards; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  .hero-container {
-    position: relative;
-    max-width: 450px; margin: 0 auto;
-    overflow: hidden;
-    border: 1px solid #111;
+  .hero-img {
+    max-width: 480px; width: 90%;
+    border: 1px solid #222;
+    cursor: pointer;
+    transition: 0.4s;
   }
-  .hero-img { width: 100%; transition: 0.8s ease; display: block; }
-  .hero-img-back {
-    position: absolute; top: 0; left: 0;
-    width: 100%; opacity: 0; transition: 0.8s ease;
-  }
-  /* Efek Tukar Gambar Saat Hover */
-  .hero-container:hover .hero-img { opacity: 0; transform: scale(1.05); }
-  .hero-container:hover .hero-img-back { opacity: 1; transform: scale(1.05); }
+  .hero-img:hover { border-color: #ff0000; transform: scale(1.01); }
 
-  /* 5. TYPOGRAPHY & BUTTONS */
   .price-tag { margin-top: 30px; }
-  .price-idr { font-size: 24px; letter-spacing: 8px; display: block; }
-  
+  .price-idr { font-size: 24px; font-weight: 900; letter-spacing: 5px; display: block; }
+  .price-usd { font-size: 12px; color: #444; display: block; margin-top: 8px; letter-spacing: 2px; }
+
   .btn-wa {
     display: inline-block;
-    margin-top: 40px;
-    background: transparent; color: #fff;
-    padding: 15px 45px; text-decoration: none;
-    border: 1px solid #333; font-size: 11px;
-    letter-spacing: 5px; transition: 0.4s;
+    margin-top: 35px;
+    background-color: transparent;
+    color: #fff;
+    padding: 15px 45px;
+    text-decoration: none;
+    border: 1px solid #333;
+    font-size: 11px;
+    letter-spacing: 5px;
+    transition: 0.4s;
   }
   .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
-  /* ... Siswa Grid & Viewer tetap sama seperti sebelumnya ... */
-  #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 20px; max-width: 900px; margin: 0 auto; }
-  .btn-back { display: none; background: none; border: none; color: #444; padding: 20px; font-size: 9px; letter-spacing: 5px; cursor: pointer; }
-  .product-card { background: #000; border: 1px solid #111; padding: 5px; cursor: pointer; }
-  .product-card img { width: 100%; filter: grayscale(100%); transition: 0.5s; }
-  .product-card:hover img { filter: grayscale(0%); }
+  .explore-btn {
+    display: block; font-size: 9px; color: #222; margin-top: 40px; 
+    letter-spacing: 8px; cursor: pointer; transition: 0.3s;
+  }
+  .explore-btn:hover { color: #fff; }
 
-  #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; }
-  #imgView { max-width: 85%; max-height: 80vh; transition: transform 0.1s; }
+  /* 5. HALAMAN 2: DETAIL GRID */
+  #detail-grid {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px; padding: 15px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .btn-back {
+    display: none; background: none; border: none;
+    color: #444; padding: 20px; cursor: pointer;
+    margin: 15px 0; font-size: 10px; letter-spacing: 5px;
+  }
+  .btn-back:hover { color: #fff; }
+
+  .product-card { background: #050505; border: 1px solid #111; padding: 8px; cursor: pointer; }
+  .product-card img { width: 100%; display: block; }
+
+  /* 6. POPUP VIEWER ZOOM & DRAG */
+  #viewer {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0,0,0,0.98);
+    z-index: 10000; overflow: hidden; touch-action: none;
+  }
+  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; cursor: grab; }
+  #imgView { max-width: 85%; max-height: 85vh; transition: transform 0.1s ease-out; transform-origin: center; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.4; }
+  .ui-btn:hover { opacity: 1; }
+  .close-x { top: 10px; right: 10px; }
+  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
+  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
+
+  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } .logo-header img { max-width: 200px; } }
 </style>
 </head>
 <body>
-
-<div id="custom-cursor"></div>
 
 <div class="logo-header">
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
+<!-- HALAMAN 1 -->
 <div id="main-landing">
-  <div class="hero-container" onclick="goToDetails()">
-    <img src="kaos_depan.jpg" class="hero-img">
-    <img src="kaos_belakang.jpg" class="hero-img-back"> <!-- Gambar belakang muncul pas hover -->
-  </div>
+  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
   
   <div class="price-tag">
     <span class="price-idr">IDR 165.000</span>
+    <span class="price-usd">11$ USD</span>
   </div>
 
   <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
-    PURCHASE
+    PURCHASE ARTICLE
   </a>
 
-  <p style="font-size: 9px; color: #222; margin-top: 40px; letter-spacing: 8px; cursor: pointer;" onclick="goToDetails()">[ EXPLORE ]</p>
+  <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
-<!-- Grid & Viewer Script Sama Seperti Sebelumnya -->
-<button class="btn-back" id="btnBack" onclick="goBack()">RETURN</button>
+<!-- HALAMAN 2 -->
+<button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO GALLERY</button>
 <div id="detail-grid">
   <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
   <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
@@ -119,20 +140,73 @@
   <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
 </div>
 
+<!-- POPUP ZOOM -->
+<div id="viewer">
+  <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
+  <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
+  <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
+  <div class="viewer-wrap" id="dropzone">
+    <img id="imgView" src="">
+  </div>
+</div>
+
 <script>
-  // Kursor Kustom Script
-  const cursor = document.getElementById('custom-cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
-
-  // Fungsi Navigasi & Zoom (Gunakan script dari percakapan sebelumnya)
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
-  function goToDetails() { document.getElementById('main-landing').style.display = 'none'; document.getElementById('detail-grid').style.display = 'grid'; document.getElementById('btnBack').style.display = 'inline-block'; }
-  function goBack() { document.getElementById('main-landing').style.display = 'block'; document.getElementById('detail-grid').style.display = 'none'; document.getElementById('btnBack').style.display = 'none'; }
-  // ... Tambahkan fungsi openViewer, closeViewer, dsb ...
-</script>
+  let currentIndex = 0;
+  let scale = 1, pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
 
-</body>
-</html>
+  function goToDetails() {
+    document.getElementById('main-landing').style.display = 'none';
+    document.getElementById('detail-grid').style.display = 'grid';
+    document.getElementById('btnBack').style.display = 'inline-block';
+    window.scrollTo(0,0);
+  }
+
+  function goBack() {
+    document.getElementById('main-landing').style.display = 'block';
+    document.getElementById('detail-grid').style.display = 'none';
+    document.getElementById('btnBack').style.display = 'none';
+  }
+
+  function openViewer(index) {
+    currentIndex = index;
+    document.getElementById("viewer").style.display = "block";
+    updateContent();
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeViewer() {
+    document.getElementById("viewer").style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+
+  function updateContent() {
+    scale = 1; pointX = 0; pointY = 0;
+    document.getElementById("imgView").src = imgs[currentIndex];
+    updateTransform();
+  }
+
+  function nextImg() { currentIndex = (currentIndex + 1) % imgs.length; updateContent(); }
+  function prevImg() { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; updateContent(); }
+
+  function updateTransform() {
+    document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+  }
+
+  const viewer = document.getElementById("viewer");
+  viewer.onwheel = function(e) {
+    e.preventDefault();
+    if (e.deltaY > 0) scale = Math.max(1, scale - 0.2);
+    else scale = Math.min(5, scale + 0.2);
+    updateTransform();
+  }
+
+  const dropzone = document.getElementById("dropzone");
+  dropzone.onmousedown = function(e) {
+    isDragging = true;
+    startX = e.clientX - pointX;
+    startY = e.clientY - pointY;
+  }
+  window.onmousemove = function(e) {
+    if (!isDragging) return;
+    pointX = e.clientX - startX
