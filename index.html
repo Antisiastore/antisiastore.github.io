@@ -209,4 +209,12 @@
   }
   window.onmousemove = function(e) {
     if (!isDragging) return;
-    pointX = e.clientX - startX
+    pointX = e.clientX - startX;
+    pointY = e.clientY - startY;
+    updateTransform();
+  }
+  window.onmouseup = function() { isDragging = false; }
+</script>
+
+</body>
+</html>
