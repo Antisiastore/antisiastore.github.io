@@ -1,89 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>ANTISIA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANTISIA STORE</title>
 
-    <style>
-        body {
-            background: #0a0a0a;
-            color: white;
-            text-align: center;
-            font-family: Arial;
-        }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  text-align: center;
+}
 
-        h1 {
-            margin-top: 20px;
-        }
+h1 {
+  padding: 20px;
+}
 
-        /* GAMBAR UTAMA */
-        #mainImage {
-            width: 300px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
 
-        /* THUMB */
-        .thumbs img {
-            width: 70px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
+.card {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 10px;
+  width: 250px;
+  transition: 0.3s;
+}
 
-        .thumbs img:hover {
-            transform: scale(1.1);
-            border: 2px solid red;
-        }
+.card:hover {
+  transform: scale(1.05);
+}
 
-        /* BUTTON */
-        a {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: red;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+img {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: red;
+  color: white;
+}
+
+/* ZOOM MODAL */
+#zoomModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#zoomModal img {
+  max-width: 90%;
+  max-height: 90%;
+}
+</style>
+
 </head>
-
 <body>
 
-<h1>ANTISIA</h1>
+<h1>ANTISIA STORE</h1>
 
-<!-- GAMBAR UTAMA -->
-<img id="mainImage" src="kaos_depan.jpg">
+<div class="container">
 
-<!-- THUMB -->
-<div class="thumbs">
-    <img src="kaos_depan.jpg" onclick="ganti(this)">
-    <img src="kaos_belakang.jpg" onclick="ganti(this)">
-    <img src="model_depan.jpg" onclick="ganti(this)">
-    <img src="model_belakang.jpg" onclick="ganti(this)">
-    <img src="detail.jpg" onclick="ganti(this)">
+  <div class="card">
+    <img src="kaos_depan.jpg" onclick="zoomImage(this)">
+    <h3>Kaos Depan</h3>
+    <a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20pesan%20kaos%20ANTISIA" target="_blank">
+      <button>BELI SEKARANG</button>
+    </a>
+  </div>
+
+  <div class="card">
+    <img src="kaos_belakang.jpg" onclick="zoomImage(this)">
+    <h3>Kaos Belakang</h3>
+    <a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20pesan%20kaos%20ANTISIA" target="_blank">
+      <button>BELI SEKARANG</button>
+    </a>
+  </div>
+
+  <div class="card">
+    <img src="model_depan.jpg" onclick="zoomImage(this)">
+    <h3>Model Depan</h3>
+    <a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20pesan%20kaos%20ANTISIA" target="_blank">
+      <button>BELI SEKARANG</button>
+    </a>
+  </div>
+
+  <div class="card">
+    <img src="model_belakang.jpg" onclick="zoomImage(this)">
+    <h3>Model Belakang</h3>
+    <a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20pesan%20kaos%20ANTISIA" target="_blank">
+      <button>BELI SEKARANG</button>
+    </a>
+  </div>
+
+  <div class="card">
+    <img src="detail.jpg" onclick="zoomImage(this)">
+    <h3>Detail</h3>
+    <a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20pesan%20kaos%20ANTISIA" target="_blank">
+      <button>BELI SEKARANG</button>
+    </a>
+  </div>
+
 </div>
 
-<h2>Kaos ANTISIA</h2>
-<p>Rp 150.000</p>
-
-<a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20beli%20kaos%20ANTISIA" target="_blank">
-  <button style="
-    background:black;
-    color:white;
-    padding:10px 20px;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-  ">
-    BELI SEKARANG
-  </button>
-</a>
+<!-- ZOOM -->
+<div id="zoomModal">
+  <img id="zoomedImg">
+</div>
 
 <script>
-function ganti(el){
-    document.getElementById("mainImage").src = el.src;
+function zoomImage(img) {
+  document.getElementById("zoomModal").style.display = "flex";
+  document.getElementById("zoomedImg").src = img.src;
+}
+
+document.getElementById("zoomModal").onclick = function() {
+  this.style.display = "none";
 }
 </script>
 
