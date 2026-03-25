@@ -14,12 +14,12 @@ body{
   text-align:center;
 }
 
-h1{ margin:20px; }
+h1{margin:20px;}
 
 .grid{
   display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+  flex-direction:column;
+  align-items:center;
   gap:20px;
   padding:20px;
 }
@@ -28,7 +28,8 @@ h1{ margin:20px; }
   background:#1a1a1a;
   padding:15px;
   border-radius:10px;
-  width:220px;
+  width:90%;
+  max-width:300px;
 }
 
 .card img{
@@ -51,45 +52,32 @@ h1{ margin:20px; }
   flex-direction:column;
 }
 
-#zoomWrapper{
-  width:90vw;
-  height:80vh;
-  overflow:hidden;
-  position:relative;
-}
-
-#viewerImg{
-  position:absolute;
-  top:50%;
-  left:50%;
-  max-width:80vw;
-  max-height:80vh;
-  transform:translate(-50%,-50%) scale(1);
+#viewer img{
+  max-width:90%;
+  max-height:70%;
 }
 
 .nav{
   position:absolute;
   top:50%;
-  font-size:40px;
-  color:white;
+  font-size:35px;
   background:none;
   border:none;
-  cursor:pointer;
+  color:white;
 }
 
-.left{ left:20px; }
-.right{ right:20px; }
+.left{left:10px;}
+.right{right:10px;}
 
 .close{
   position:absolute;
   top:20px;
   right:20px;
   font-size:30px;
-  cursor:pointer;
 }
 
-.zoom-control{
-  position:fixed;
+.zoom{
+  position:absolute;
   bottom:20px;
 }
 </style>
@@ -101,56 +89,29 @@ h1{ margin:20px; }
 
 <div class="grid">
 
-<div class="card">
 <img src="kaos_depan.jpg" onclick="openViewer(0)">
-<p>Kaos Depan</p>
-</div>
-
-<div class="card">
 <img src="kaos_belakang.jpg" onclick="openViewer(1)">
-<p>Kaos Belakang</p>
-</div>
-
-<div class="card">
 <img src="model_depan.jpg" onclick="openViewer(2)">
-<p>Model Depan</p>
-</div>
-
-<div class="card">
 <img src="model_belakang.jpg" onclick="openViewer(3)">
-<p>Model Belakang</p>
-</div>
-
-<div class="card">
 <img src="detail.jpg" onclick="openViewer(4)">
-<p>Detail</p>
-</div>
 
 </div>
 
-<!-- VIEWER -->
 <div id="viewer">
 <span class="close" onclick="closeViewer()">✕</span>
 
-<button class="nav left" onclick="prevImage()">◀</button>
+<button class="nav left" onclick="prev()">◀</button>
+<img id="imgView">
+<button class="nav right" onclick="next()">▶</button>
 
-<div id="zoomWrapper">
-<img id="viewerImg">
-</div>
-
-<button class="nav right" onclick="nextImage()">▶</button>
-
-<div class="zoom-control">
+<div class="zoom">
 <button onclick="zoomIn()">+</button>
 <button onclick="zoomOut()">-</button>
 </div>
-
 </div>
 
 <script>
-window.onload = function(){
-
-let images = [
+let imgs=[
 "kaos_depan.jpg",
 "kaos_belakang.jpg",
 "model_depan.jpg",
@@ -158,52 +119,45 @@ let images = [
 "detail.jpg"
 ];
 
-let current = 0;
-let scale = 1;
+let i=0;
+let scale=1;
 
-window.openViewer = function(i){
-current = i;
+function openViewer(n){
+i=n;
 document.getElementById("viewer").style.display="flex";
 show();
 }
 
-window.closeViewer = function(){
+function closeViewer(){
 document.getElementById("viewer").style.display="none";
 }
 
 function show(){
-let img = document.getElementById("viewerImg");
-img.src = images[current];
-scale = 1;
-img.style.transform = "translate(-50%,-50%) scale(1)";
+let img=document.getElementById("imgView");
+img.src=imgs[i];
+scale=1;
+img.style.transform="scale(1)";
 }
 
-window.nextImage = function(){
-current = (current+1)%images.length;
+function next(){
+i=(i+1)%imgs.length;
 show();
 }
 
-window.prevImage = function(){
-current = (current-1+images.length)%images.length;
+function prev(){
+i=(i-1+imgs.length)%imgs.length;
 show();
 }
 
-window.zoomIn = function(){
-scale += 0.2;
-apply();
+function zoomIn(){
+scale+=0.2;
+document.getElementById("imgView").style.transform="scale("+scale+")";
 }
 
-window.zoomOut = function(){
-scale -= 0.2;
-if(scale < 1) scale = 1;
-apply();
-}
-
-function apply(){
-let img = document.getElementById("viewerImg");
-img.style.transform = "translate(-50%,-50%) scale("+scale+")";
-}
-
+function zoomOut(){
+scale-=0.2;
+if(scale<1) scale=1;
+document.getElementById("imgView").style.transform="scale("+scale+")";
 }
 </script>
 
