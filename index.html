@@ -6,92 +6,128 @@
 <title>ANTISIA STORE</title>
 
 <style>
-body{
-  margin:0;
-  background:#0d0d0d;
-  color:white;
-  text-align:center;
-  font-family:Arial;
-}
+  body {
+    margin: 0;
+    background: #0d0d0d;
+    color: white;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-h1{margin:20px;}
+  /* Bagian Logo */
+  .header-logo {
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.grid{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
-  padding:20px;
-}
+  .header-logo img {
+    max-width: 280px; /* Ukuran logo, bisa kamu sesuaikan */
+    height: auto;
+    filter: drop-shadow(0px 0px 10px rgba(255, 0, 0, 0.2)); /* Efek bayangan halus merah */
+  }
 
-.card{
-  background:#1a1a1a;
-  padding:15px;
-  border-radius:12px;
-  width:90%;
-  max-width:320px;
-}
+  .grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+  }
 
-.card img{
-  width:100%;
-  border-radius:10px;
-  cursor:pointer;
-}
+  .card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 320px;
+    transition: transform 0.2s;
+  }
 
-/* VIEWER */
-#viewer{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:black;
-  z-index:999;
-}
+  .card:hover {
+    transform: scale(1.02);
+  }
 
-/* WRAPPER (INI KUNCI) */
-.viewer-wrap{
-  width:100%;
-  height:100%;
-  overflow:auto;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
+  .card img {
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+  }
 
-/* GAMBAR NORMAL */
-.viewer-wrap img{
-  max-width:100%;
-  height:auto;
-}
+  .card p {
+    margin-top: 15px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #cccccc;
+  }
 
-/* NAV */
-.nav{
-  position:fixed;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:30px;
-  background:none;
-  border:none;
-  color:white;
-}
+  /* VIEWER SETTINGS */
+  #viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 999;
+  }
 
-.left{left:10px;}
-.right{right:10px;}
+  .viewer-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.close{
-  position:fixed;
-  top:20px;
-  right:20px;
-  font-size:30px;
-}
+  .viewer-wrap img {
+    max-width: 95%;
+    max-height: 90vh;
+    object-fit: contain;
+  }
+
+  /* NAVIGATION */
+  .nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 35px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 20px;
+    z-index: 1000;
+  }
+
+  .left { left: 5px; }
+  .right { right: 5px; }
+
+  .close {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 35px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 1000;
+  }
 </style>
-
 </head>
 <body>
 
-<h1>ANTISIA STORE</h1>
+<!-- Bagian Logo Utama -->
+<div class="header-logo">
+  <!-- Pastikan nama file di bawah ini sesuai dengan nama file logo di foldermu -->
+  <img src="logo_antisia.png" alt="Antisia Logo">
+</div>
 
 <div class="grid">
   <div class="card">
@@ -116,57 +152,62 @@ h1{margin:20px;}
 
   <div class="card">
     <img src="detail.jpg" onclick="openViewer(4)">
-    <p>Detail</p>
+    <p>Detail Produk</p>
   </div>
 </div>
 
-<!-- VIEWER -->
+<!-- VIEWER POPUP -->
 <div id="viewer">
+  <button class="close" onclick="closeViewer()">✕</button>
+  <button class="nav left" onclick="prev()">◀</button>
+  <button class="nav right" onclick="next()">▶</button>
 
-<button class="close" onclick="closeViewer()">✕</button>
-<button class="nav left" onclick="prev()">◀</button>
-<button class="nav right" onclick="next()">▶</button>
-
-<div class="viewer-wrap">
-  <img id="imgView">
-</div>
-
+  <div class="viewer-wrap">
+    <img id="imgView">
+  </div>
 </div>
 
 <script>
-let imgs=[
-"kaos_depan.jpg",
-"kaos_belakang.jpg",
-"model_depan.jpg",
-"model_belakang.jpg",
-"detail.jpg"
-];
+  let imgs = [
+    "kaos_depan.jpg",
+    "kaos_belakang.jpg",
+    "model_depan.jpg",
+    "model_belakang.jpg",
+    "detail.jpg"
+  ];
 
-let i=0;
+  let i = 0;
 
-function openViewer(n){
-  i=n;
-  document.getElementById("viewer").style.display="block";
-  show();
-}
+  function openViewer(n) {
+    i = n;
+    document.getElementById("viewer").style.display = "block";
+    document.body.style.overflow = "hidden"; // Mencegah scrolling saat viewer buka
+    show();
+  }
 
-function closeViewer(){
-  document.getElementById("viewer").style.display="none";
-}
+  function closeViewer() {
+    document.getElementById("viewer").style.display = "none";
+    document.body.style.overflow = "auto"; // Mengaktifkan scroll kembali
+  }
 
-function show(){
-  document.getElementById("imgView").src=imgs[i];
-}
+  function show() {
+    document.getElementById("imgView").src = imgs[i];
+  }
 
-function next(){
-  i=(i+1)%imgs.length;
-  show();
-}
+  function next() {
+    i = (i + 1) % imgs.length;
+    show();
+  }
 
-function prev(){
-  i=(i-1+imgs.length)%imgs.length;
-  show();
-}
+  function prev() {
+    i = (i - 1 + imgs.length) % imgs.length;
+    show();
+  }
+
+  // Menutup viewer dengan tombol 'Esc' di keyboard
+  document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") closeViewer();
+  });
 </script>
 
 </body>
