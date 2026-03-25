@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ANTISIA</title>
+
+    <style>
+        body {
+            background: #0a0a0a;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        /* GAMBAR UTAMA */
+        #mainImage {
+            width: 300px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* THUMB */
+        .thumbs img {
+            width: 70px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .thumbs img:hover {
+            transform: scale(1.1);
+            border: 2px solid red;
+        }
+
+        /* BUTTON */
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>ANTISIA</h1>
+
+<!-- GAMBAR UTAMA -->
+<img id="mainImage" src="kaos_depan.jpg">
+
+<!-- THUMB -->
+<div class="thumbs">
+    <img src="kaos_depan.jpg" onclick="ganti(this)">
+    <img src="kaos_belakang.jpg" onclick="ganti(this)">
+    <img src="model_depan.jpg" onclick="ganti(this)">
+    <img src="model_belakang.jpg" onclick="ganti(this)">
+    <img src="detail.jpg" onclick="ganti(this)">
+</div>
+
+<h2>Kaos ANTISIA</h2>
+<p>Rp 150.000</p>
+
+<a href="https://wa.me/6281234567890">Beli via WhatsApp</a>
+
+<script>
+function ganti(el){
+    document.getElementById("mainImage").src = el.src;
+}
+</script>
+
+</body>
+</html>
