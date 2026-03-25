@@ -6,28 +6,29 @@
 <title>ANTISIA STORE</title>
 
 <style>
-  /* Dasar Halaman */
+  /* Dasar Halaman - Hitam Total */
   body {
     margin: 0;
-    background: #000000; /* Hitam pekat */
+    background: #000000;
     color: white;
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
   }
 
-  /* --- BAGIAN LOGO (DIBERSIHKAN) --- */
+  /* --- BAGIAN LOGO --- */
   .logo-header {
-    padding: 50px 20px;
+    padding: 60px 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    background: #000000;
   }
 
   .logo-header img {
-    max-width: 280px; /* Sesuaikan lebar logo di sini */
+    max-width: 320px; /* Ukuran bisa kamu sesuaikan */
     height: auto;
     display: block;
-    /* Tidak perlu mix-blend-mode lagi karena file sudah transparan */
+    /* Pastikan tidak ada filter yang mengganggu PNG transparan */
+    mix-blend-mode: normal; 
   }
 
   /* --- GRID PRODUK --- */
@@ -35,32 +36,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 40px;
     padding: 20px;
   }
 
   .card {
-    background: #111111;
-    padding: 15px;
-    border: 1px solid #222;
+    background: #000000; /* Sama dengan background agar menyatu */
+    padding: 10px;
     width: 90%;
-    max-width: 350px;
-    border-radius: 4px;
+    max-width: 400px;
   }
 
   .card img {
     width: 100%;
     cursor: pointer;
     display: block;
-    border-radius: 2px;
+    /* Efek transisi halus saat diklik */
+    transition: opacity 0.3s ease;
   }
 
   .card p {
     margin-top: 15px;
-    font-size: 13px;
-    letter-spacing: 2px;
+    font-size: 12px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    color: #888;
+    color: #555;
   }
 
   /* --- VIEWER POPUP --- */
@@ -71,7 +71,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.98);
+    background: rgba(0,0,0,0.95);
     z-index: 999;
   }
 
@@ -88,7 +88,6 @@
     max-height: 85vh;
   }
 
-  /* Navigasi */
   .nav {
     position: fixed;
     top: 50%;
@@ -96,13 +95,12 @@
     font-size: 40px;
     background: none;
     border: none;
-    color: #444;
+    color: #333;
     cursor: pointer;
-    padding: 10px;
   }
 
-  .left { left: 5px; }
-  .right { right: 5px; }
+  .left { left: 10px; }
+  .right { right: 10px; }
 
   .close {
     position: fixed;
@@ -118,36 +116,24 @@
 </head>
 <body>
 
-<!-- Header Logo -->
 <div class="logo-header">
-  <img src="logo_antisia.png" alt="Antisia Logo">
+  <!-- Tips: Tambahkan ?v=1 di belakang nama file untuk memaksa browser memuat ulang -->
+  <img src="logo_antisia.png?v=1" alt="Antisia Logo">
 </div>
 
-<!-- List Produk -->
 <div class="grid">
   <div class="card">
-    <img src="kaos_depan.jpg" onclick="openViewer(0)">
-    <p>Front Article</p>
+    <img src="kaos_depan.jpg?v=1" onclick="openViewer(0)">
+    <p>Front Side</p>
   </div>
   <div class="card">
-    <img src="kaos_belakang.jpg" onclick="openViewer(1)">
-    <p>Back Article</p>
+    <img src="kaos_belakang.jpg?v=1" onclick="openViewer(1)">
+    <p>Back Side</p>
   </div>
-  <div class="card">
-    <img src="model_depan.jpg" onclick="openViewer(2)">
-    <p>Lookbook 01</p>
-  </div>
-  <div class="card">
-    <img src="model_belakang.jpg" onclick="openViewer(3)">
-    <p>Lookbook 02</p>
-  </div>
-  <div class="card">
-    <img src="detail.jpg" onclick="openViewer(4)">
-    <p>Details</p>
-  </div>
+  <!-- ... Tambahkan card lain jika perlu ... -->
 </div>
 
-<!-- Viewer -->
+<!-- Viewer popup tetap sama kodenya -->
 <div id="viewer">
   <button class="close" onclick="closeViewer()">✕</button>
   <button class="nav left" onclick="prev()">◀</button>
@@ -172,7 +158,7 @@
   }
 
   function show() {
-    document.getElementById("imgView").src = imgs[i];
+    document.getElementById("imgView").src = imgs[i] + "?v=1";
   }
 
   function next() {
