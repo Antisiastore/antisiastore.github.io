@@ -1,154 +1,130 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE</title>
+    <title>Toko Acep</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #000;
-  color: white;
-  text-align: center;
-}
-
-h1 {
-  margin-top: 20px;
-  letter-spacing: 3px;
-}
-
-.main-container {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-}
-
-.main-image {
-  width: 100%;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.main-image:hover {
-  transform: scale(1.03);
-}
-
-.thumbnails {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.thumbnails img {
-  width: 60px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.thumbnails img:hover {
-  transform: scale(1.1);
-  border: 2px solid red;
-}
-
-h2 {
-  margin-top: 20px;
-}
-
-.price {
-  margin: 10px 0;
-  color: #ccc;
-}
-
-button {
-  padding: 12px 25px;
-  background: red;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: darkred;
-}
-
-/* ZOOM MODAL */
 #zoomModal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top:0; left:0;
+  width:100%;
+  height:100%;
   background: rgba(0,0,0,0.95);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+  justify-content:center;
+  align-items:center;
+  flex-direction: column;
+  z-index:999;
 }
 
 #zoomedImg {
-  max-width: 90%;
-  max-height: 90%;
+  max-width:80vw;
+  max-height:80vh;
+  transition: transform 0.1s;
+  cursor: grab;
+}
+
+#controls button {
+  padding:10px;
+  margin:5px;
+  font-size:18px;
 }
 </style>
 
 </head>
 <body>
 
-<h1>ANTISIA</h1>
+<div class="container">
 
-<div class="main-container">
+<h1>TOKO ACEP SURYA</h1>
 
-  <!-- GAMBAR UTAMA -->
-  <img id="mainImg" src="kaos_depan.jpg" class="main-image"
-  onclick="zoomImage(this)" ondblclick="zoomImage(this)">
+<form method="GET">
+    <input type="text" name="q" placeholder="Cari produk...">
+    
+    <select name="kategori">
+        <option value="">Semua</option>
+        <option value="kaos">Kaos</option>
+        <option value="hoodie">Hoodie</option>
+    </select>
 
-  <!-- THUMBNAIL -->
-  <div class="thumbnails">
-    <img src="kaos_depan.jpg" onclick="changeImage(this)">
-    <img src="kaos_belakang.jpg" onclick="changeImage(this)">
-    <img src="model_depan.jpg" onclick="changeImage(this)">
-    <img src="model_belakang.jpg" onclick="changeImage(this)">
-    <img src="detail.jpg" onclick="changeImage(this)">
-  </div>
+    <button type="submit">Cari</button>
+</form>
 
-  <h2>Kaos ANTISIA</h2>
-  <div class="price">Rp 150.000</div>
+<div class="grid">
 
-  <!-- BUTTON WA -->
-  <a href="https://wa.me/6282137358827?text=Halo%20saya%20mau%20pesan%20kaos%20ANTISIA" target="_blank">
-    <button>BELI SEKARANG</button>
-  </a>
+{% for p in produk %}
+<div class="card">
+    <img src="{{ url_for('static', filename=p.gambar[0]) }}"
+         onclick="zoomImage(this)">
+    
+    <h3>{{ p.nama }}</h3>
+    <p>{{ p.harga }}</p>
+
+    <a href="/produk/{{ p.id }}">Lihat</a>
+</div>
+{% endfor %}
 
 </div>
 
-<!-- ZOOM -->
+</div>
+
+<!-- ZOOM MODAL -->
 <div id="zoomModal">
   <img id="zoomedImg">
+
+  <div id="controls">
+    <button onclick="zoomIn()">+</button>
+    <button onclick="zoomOut()">-</button>
+    <button onclick="resetZoom()">RESET</button>
+  </div>
 </div>
 
 <script>
-// ZOOM IMAGE
-function zoomImage(img) {
+let scale = 1;
+
+function zoomImage(el){
   document.getElementById("zoomModal").style.display = "flex";
-  document.getElementById("zoomedImg").src = img.src;
+  document.getElementById("zoomedImg").src = el.src;
+  scale = 1;
+  update();
 }
 
-// GANTI GAMBAR
-function changeImage(img) {
-  document.getElementById("mainImg").src = img.src;
+function zoomIn(){
+  scale += 0.2;
+  update();
 }
 
-// TUTUP ZOOM
-document.getElementById("zoomModal").onclick = function() {
-  this.style.display = "none";
+function zoomOut(){
+  scale -= 0.2;
+  if(scale < 1) scale = 1;
+  update();
+}
+
+function resetZoom(){
+  scale = 1;
+  update();
+}
+
+function update(){
+  document.getElementById("zoomedImg").style.transform = "scale(" + scale + ")";
+}
+
+// SCROLL ZOOM
+document.getElementById("zoomedImg").addEventListener("wheel", function(e){
+  e.preventDefault();
+  if(e.deltaY < 0){
+    zoomIn();
+  } else {
+    zoomOut();
+  }
+});
+
+// TUTUP MODAL
+document.getElementById("zoomModal").onclick = function(e){
+  if(e.target.id === "zoomModal"){
+    this.style.display = "none";
+  }
 }
 </script>
 
