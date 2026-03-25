@@ -3,115 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE - OFFICIAL</title>
+<title>ANTISIA - DARK ELEGANCE</title>
 
 <style>
-  /* 1. STYLING DASAR & SCROLLBAR */
-  ::-webkit-scrollbar { width: 5px; }
+  /* 1. SCROLLBAR MINIMALIS */
+  ::-webkit-scrollbar { width: 3px; }
   ::-webkit-scrollbar-track { background: #000; }
-  ::-webkit-scrollbar-thumb { background: #333; }
-  
+  ::-webkit-scrollbar-thumb { background: #1a1a1a; }
+
+  /* 2. BODY DENGAN EFEK VIGNETTE */
   body {
     margin: 0; padding: 0;
-    background-color: #000;
-    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); 
+    background: radial-gradient(circle, #111 0%, #000 100%); /* Efek sorot lampu tengah */
     background-attachment: fixed;
     color: #fff;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Courier New', Courier, monospace; /* Font mesin tik/tajam */
     text-align: center;
+    overflow-x: hidden;
   }
 
-  /* 2. HEADER LOGO RAMPING */
+  /* 3. HEADER RAMPING & LUX */
   .logo-header { 
-    padding: 12px 20px;
-    position: sticky; 
-    top: 0; 
-    background: rgba(0,0,0,0.85); 
-    backdrop-filter: blur(10px);
-    z-index: 900;
-    border-bottom: 1px solid #1a1a1a;
+    padding: 20px 0;
+    position: sticky; top: 0; 
+    background: rgba(0,0,0,0.95); 
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
   }
   .logo-header img { 
-    max-width: 250px;
-    width: 65%;
-    height: auto; 
-    display: block;
-    margin: 0 auto;
+    max-width: 220px; width: 60%; height: auto; 
+    filter: drop-shadow(0 0 10px rgba(255,0,0,0.2)); /* Glow merah tipis di logo */
   }
 
-  /* 3. HALAMAN 1: MAIN LANDING */
-  #main-landing { padding: 30px 20px 70px 20px; }
+  /* 4. MAIN LANDING DENGAN ANIMASI */
+  #main-landing { padding: 60px 20px; opacity: 0; animation: fadeIn 2s forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .hero-container {
+    position: relative;
+    max-width: 450px; margin: 0 auto;
+    cursor: pointer;
+  }
   .hero-img {
-    max-width: 480px; width: 90%;
-    border: 1px solid #222;
-    cursor: pointer; /* Memberi tanda bisa diklik */
-    transition: 0.3s;
+    width: 100%;
+    border: 1px solid #111;
+    transition: 0.6s ease;
   }
-  .hero-img:hover { border-color: #ff0000; transform: scale(1.01); }
+  /* Efek saat gambar disentuh: Zoom sedikit & Border Merah */
+  .hero-container:hover .hero-img {
+    border-color: #ff0000;
+    transform: scale(1.02);
+  }
 
-  .price-tag { margin-top: 20px; }
-  .price-idr { font-size: 26px; font-weight: 900; letter-spacing: 2px; display: block; }
-  .price-usd { font-size: 14px; color: #555; display: block; margin-top: 4px; }
+  /* TEXT HARGA ELEGANT */
+  .price-tag { margin-top: 30px; }
+  .price-idr { font-size: 22px; letter-spacing: 6px; font-weight: 300; display: block; }
+  .price-usd { font-size: 12px; color: #444; display: block; margin-top: 8px; letter-spacing: 2px; }
 
+  /* TOMBOL ORDER MINIMALIS */
   .btn-wa {
     display: inline-block;
-    margin-top: 25px;
-    background-color: #ff0000;
+    margin-top: 40px;
+    background: transparent;
     color: #fff;
-    padding: 15px 40px;
+    padding: 15px 50px;
     text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 3px;
-    transition: 0.4s;
-    border: 1px solid #ff0000;
-    font-size: 13px;
+    border: 1px solid #333;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    transition: 0.5s;
   }
-  .btn-wa:hover { background: transparent; color: #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+  .btn-wa:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+  }
 
   .explore-btn {
-    display: block;
-    font-size: 10px; 
-    color: #444; 
-    margin-top: 25px; 
-    letter-spacing: 5px; 
-    cursor: pointer; 
-    text-transform: uppercase;
-    transition: 0.3s;
+    display: block; font-size: 9px; color: #222; margin-top: 40px; 
+    letter-spacing: 8px; cursor: pointer; transition: 0.3s;
   }
-  .explore-btn:hover { color: #fff; }
+  .explore-btn:hover { color: #ff0000; }
 
-  /* 4. HALAMAN 2: DETAIL GRID */
+  /* 5. GRID DETAIL */
   #detail-grid {
-    display: none;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px; padding: 15px;
-    max-width: 900px; margin: 0 auto;
+    display: none; grid-template-columns: repeat(2, 1fr);
+    gap: 10px; padding: 10px; max-width: 1000px; margin: 0 auto;
   }
   .btn-back {
-    display: none; background: #0a0a0a; border: 1px solid #222;
-    color: #666; padding: 10px 20px; cursor: pointer;
-    margin: 15px 0; font-size: 10px; letter-spacing: 2px;
+    display: none; background: none; border: none; color: #444; 
+    padding: 20px; cursor: pointer; font-size: 9px; letter-spacing: 5px;
   }
+  .btn-back:hover { color: #fff; }
 
-  .product-card { background: rgba(10,10,10,0.8); border: 1px solid #1a1a1a; padding: 8px; cursor: pointer; }
-  .product-card img { width: 100%; display: block; }
-  .product-card p { font-size: 9px; color: #444; margin-top: 8px; }
+  .product-card { background: #000; border: 1px solid #111; padding: 5px; cursor: pointer; }
+  .product-card img { width: 100%; filter: grayscale(50%); transition: 0.5s; }
+  .product-card:hover img { filter: grayscale(0%); }
 
-  /* 5. POPUP VIEWER */
+  /* 6. VIEWER ZOOM (TETAP STABIL) */
   #viewer {
     display: none; position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%; background: rgba(0,0,0,0.98);
-    z-index: 10000; overflow: hidden; touch-action: none;
+    width: 100%; height: 100%; background: #000;
+    z-index: 10000; overflow: hidden;
   }
-  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; cursor: grab; }
-  #imgView { max-width: 85%; max-height: 85vh; transition: transform 0.1s ease-out; transform-origin: center; }
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10001; padding: 15px; opacity: 0.5; }
+  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+  #imgView { max-width: 90%; max-height: 80vh; transition: transform 0.1s ease-out; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.3; }
   .ui-btn:hover { opacity: 1; }
   .close-x { top: 10px; right: 10px; }
   .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
   .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
 
-  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } .logo-header img { max-width: 180px; } }
+  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -120,35 +126,32 @@
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
-<!-- HALAMAN 1 -->
 <div id="main-landing">
-  <!-- Gambar Depan SEKARANG BISA DIKLIK kawan -->
-  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
+  <div class="hero-container" onclick="goToDetails()">
+    <img src="kaos_depan.jpg" class="hero-img">
+  </div>
   
   <div class="price-tag">
     <span class="price-idr">IDR 165.000</span>
     <span class="price-usd">11$ USD</span>
   </div>
 
-  <!-- NOMOR HP SUDAH DIPERBAHARUI kawan -->
+  <!-- NOMOR HP SUDAH FIX kawan -->
   <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
-    ORDER NOW
+    PURCHASE ARTICLE
   </a>
 
-  <!-- TEXT EXPLORE SEKARANG BISA DIKLIK kawan -->
-  <span class="explore-btn" onclick="goToDetails()">EXPLORE DETAILS</span>
+  <span class="explore-btn" onclick="goToDetails()">[ VIEW DETAILS ]</span>
 </div>
 
-<!-- HALAMAN 2 -->
-<button class="btn-back" id="btnBack" onclick="goBack()">◀ BACK TO SELECTION</button>
+<button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO GALLERY</button>
 <div id="detail-grid">
-  <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"><p>FRONT ARTICLE</p></div>
-  <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"><p>BACK ARTICLE</p></div>
-  <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"><p>LOOKBOOK 01</p></div>
-  <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"><p>LOOKBOOK 02</p></div>
+  <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
+  <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
+  <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"></div>
+  <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
 </div>
 
-<!-- POPUP ZOOM -->
 <div id="viewer">
   <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
   <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
@@ -201,6 +204,7 @@
     document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
   }
 
+  // Zoom & Drag Logic
   const viewer = document.getElementById("viewer");
   viewer.onwheel = function(e) {
     e.preventDefault();
