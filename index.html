@@ -3,46 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE</title>
+<title>ANTISIA STORE - FULL NAV</title>
 
 <style>
   body {
     margin: 0; padding: 0;
     background: #000; color: #fff;
-    font-family: Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     text-align: center;
   }
 
-  .logo-header { padding: 50px 20px; }
-  .logo-header img { max-width: 250px; height: auto; }
+  .logo-header { padding: 40px 20px; }
+  .logo-header img { max-width: 220px; height: auto; }
 
-  /* 1. TAMPILAN HALAMAN DEPAN (SINGLE IMAGE) */
+  /* --- HALAMAN 1: MAIN LANDING --- */
   #main-landing {
     padding: 20px;
     cursor: pointer;
-    transition: opacity 0.5s;
+    transition: transform 0.3s;
   }
+  #main-landing:hover { transform: scale(1.02); }
   #main-landing img {
-    max-width: 500px;
+    max-width: 450px;
     width: 90%;
-    border: 1px solid #1a1a1a;
+    border: 1px solid #222;
   }
-  #main-landing p {
-    font-size: 12px;
-    letter-spacing: 4px;
-    color: #555;
+  .hint-text {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: #444;
     margin-top: 20px;
+    text-transform: uppercase;
   }
 
-  /* 2. GRID DETAIL (TERSEMBUNYI DULU) */
+  /* --- HALAMAN 2: DETAIL GRID --- */
   #detail-grid {
-    display: none; /* Disembunyikan awalnya */
+    display: none;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     padding: 15px;
     max-width: 900px;
     margin: 0 auto;
   }
+  .btn-back {
+    display: none;
+    background: none;
+    border: 1px solid #444;
+    color: #888;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .btn-back:hover { color: #fff; border-color: #fff; }
 
   .product-card {
     background: #0a0a0a;
@@ -51,8 +66,9 @@
     cursor: pointer;
   }
   .product-card img { width: 100%; display: block; }
+  .product-card p { font-size: 9px; color: #555; margin-top: 10px; letter-spacing: 1px; }
 
-  /* 3. VIEWER ZOOM (SAMA SEPERTI SEBELUMNYA) */
+  /* --- POPUP VIEWER & ZOOM --- */
   #viewer {
     display: none;
     position: fixed;
@@ -69,16 +85,27 @@
     cursor: grab;
   }
   #imgView {
-    max-width: 80%; max-height: 80vh;
+    max-width: 85%; max-height: 80vh;
     transition: transform 0.1s ease-out;
     transform-origin: center;
   }
 
-  .btn-ui {
-    position: fixed; background: none; border: none;
-    color: #fff; font-size: 30px; cursor: pointer; z-index: 10001;
+  /* TOMBOL UI POPUP */
+  .ui-btn {
+    position: fixed;
+    background: rgba(255,255,255,0.05);
+    border: none;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10001;
+    padding: 15px;
+    transition: 0.3s;
   }
-  .btn-close { top: 20px; right: 20px; font-size: 40px; }
+  .ui-btn:hover { background: rgba(255,255,255,0.15); }
+  .close-x { top: 20px; right: 20px; background: none; font-size: 40px; }
+  .arrow-l { left: 10px; top: 50%; transform: translateY(-50%); border-radius: 0 5px 5px 0; }
+  .arrow-r { right: 10px; top: 50%; transform: translateY(-50%); border-radius: 5px 0 0 5px; }
 
   @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
@@ -86,57 +113,57 @@
 <body>
 
 <div class="logo-header">
-  <img src="logo_antisia.png" alt="Logo">
+  <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
-<!-- HALAMAN 1: TAMPILAN DEPAN -->
-<div id="main-landing" onclick="showDetails()">
-  <img src="kaos_depan.jpg" alt="Antisia Main">
-  <p>CLICK TO VIEW DETAILS</p>
+<!-- HALAMAN 1 -->
+<div id="main-landing" onclick="goToDetails()">
+  <img src="kaos_depan.jpg">
+  <p class="hint-text">Click to explore details</p>
 </div>
 
-<!-- HALAMAN 2: GRID 4 GAMBAR -->
+<!-- HALAMAN 2 -->
+<button class="btn-back" id="btnBack" onclick="goBack()">◀ Back to Home</button>
 <div id="detail-grid">
-  <div class="product-card" onclick="openViewer(0)">
-    <img src="kaos_depan.jpg"><p>FRONT</p>
-  </div>
-  <div class="product-card" onclick="openViewer(1)">
-    <img src="kaos_belakang.jpg"><p>BACK</p>
-  </div>
-  <div class="product-card" onclick="openViewer(2)">
-    <img src="model_depan.jpg"><p>LOOK 01</p>
-  </div>
-  <div class="product-card" onclick="openViewer(3)">
-    <img src="model_belakang.jpg"><p>LOOK 02</p>
-  </div>
+  <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"><p>FRONT VIEW</p></div>
+  <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"><p>BACK VIEW</p></div>
+  <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"><p>LOOKBOOK 01</p></div>
+  <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"><p>LOOKBOOK 02</p></div>
 </div>
 
 <!-- POPUP ZOOM -->
 <div id="viewer">
-  <button class="btn-ui btn-close" onclick="closeViewer()">✕</button>
+  <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
+  <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
+  <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
   <div class="viewer-wrap" id="dropzone">
     <img id="imgView" src="">
   </div>
 </div>
 
 <script>
-  // Fungsi untuk pindah halaman
-  function showDetails() {
-    document.getElementById('main-landing').style.display = 'none';
-    document.getElementById('detail-grid').style.display = 'grid';
-  }
-
-  // Logika Zoom (Sama seperti sebelumnya)
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
   let currentIndex = 0;
-  let scale = 1;
-  let pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
+  let scale = 1, pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
 
+  // Navigasi Halaman
+  function goToDetails() {
+    document.getElementById('main-landing').style.display = 'none';
+    document.getElementById('detail-grid').style.display = 'grid';
+    document.getElementById('btnBack').style.display = 'inline-block';
+  }
+
+  function goBack() {
+    document.getElementById('main-landing').style.display = 'block';
+    document.getElementById('detail-grid').style.display = 'none';
+    document.getElementById('btnBack').style.display = 'none';
+  }
+
+  // Popup & Zoom Logic
   function openViewer(index) {
     currentIndex = index;
     document.getElementById("viewer").style.display = "block";
-    resetZoom();
-    document.getElementById("imgView").src = imgs[currentIndex];
+    updateContent();
     document.body.style.overflow = "hidden";
   }
 
@@ -145,16 +172,27 @@
     document.body.style.overflow = "auto";
   }
 
-  function resetZoom() {
-    scale = 1; pointX = 0; pointY = 0;
+  function updateContent() {
+    scale = 1; pointX = 0; pointY = 0; // Reset zoom setiap ganti gambar
+    document.getElementById("imgView").src = imgs[currentIndex];
     updateTransform();
+  }
+
+  function nextImg() {
+    currentIndex = (currentIndex + 1) % imgs.length;
+    updateContent();
+  }
+
+  function prevImg() {
+    currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
+    updateContent();
   }
 
   function updateTransform() {
     document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
   }
 
-  // Zoom & Drag Logic
+  // Zoom & Drag (Mouse Events)
   const viewer = document.getElementById("viewer");
   viewer.onwheel = function(e) {
     e.preventDefault();
