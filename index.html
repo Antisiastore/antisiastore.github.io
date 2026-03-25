@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE - FULL NAV</title>
+<title>ANTISIA STORE - CHECKOUT READY</title>
 
 <style>
   body {
@@ -19,21 +19,50 @@
   /* --- HALAMAN 1: MAIN LANDING --- */
   #main-landing {
     padding: 20px;
-    cursor: pointer;
     transition: transform 0.3s;
   }
-  #main-landing:hover { transform: scale(1.02); }
   #main-landing img {
     max-width: 450px;
     width: 90%;
     border: 1px solid #222;
+    cursor: pointer;
   }
+
+  /* Styling Harga */
+  .price-tag {
+    margin-top: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .price-idr { font-size: 20px; color: #fff; display: block; }
+  .price-usd { font-size: 14px; color: #888; display: block; margin-top: 5px; }
+
+  /* Tombol WhatsApp */
+  .btn-wa {
+    display: inline-block;
+    margin-top: 25px;
+    background-color: #25d366; /* Warna khas WA */
+    color: #000;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+  }
+  .btn-wa:hover {
+    background-color: #128c7e;
+    color: #fff;
+  }
+
   .hint-text {
     font-size: 10px;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     color: #444;
-    margin-top: 20px;
+    margin-top: 15px;
     text-transform: uppercase;
+    cursor: pointer;
   }
 
   /* --- HALAMAN 2: DETAIL GRID --- */
@@ -57,7 +86,6 @@
     letter-spacing: 2px;
     text-transform: uppercase;
   }
-  .btn-back:hover { color: #fff; border-color: #fff; }
 
   .product-card {
     background: #0a0a0a;
@@ -66,9 +94,9 @@
     cursor: pointer;
   }
   .product-card img { width: 100%; display: block; }
-  .product-card p { font-size: 9px; color: #555; margin-top: 10px; letter-spacing: 1px; }
+  .product-card p { font-size: 9px; color: #555; margin-top: 10px; }
 
-  /* --- POPUP VIEWER & ZOOM --- */
+  /* --- POPUP VIEWER --- */
   #viewer {
     display: none;
     position: fixed;
@@ -90,7 +118,6 @@
     transform-origin: center;
   }
 
-  /* TOMBOL UI POPUP */
   .ui-btn {
     position: fixed;
     background: rgba(255,255,255,0.05);
@@ -100,12 +127,10 @@
     cursor: pointer;
     z-index: 10001;
     padding: 15px;
-    transition: 0.3s;
   }
-  .ui-btn:hover { background: rgba(255,255,255,0.15); }
   .close-x { top: 20px; right: 20px; background: none; font-size: 40px; }
-  .arrow-l { left: 10px; top: 50%; transform: translateY(-50%); border-radius: 0 5px 5px 0; }
-  .arrow-r { right: 10px; top: 50%; transform: translateY(-50%); border-radius: 5px 0 0 5px; }
+  .arrow-l { left: 10px; top: 50%; transform: translateY(-50%); }
+  .arrow-r { right: 10px; top: 50%; transform: translateY(-50%); }
 
   @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
@@ -116,13 +141,24 @@
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
-<!-- HALAMAN 1 -->
-<div id="main-landing" onclick="goToDetails()">
-  <img src="kaos_depan.jpg">
-  <p class="hint-text">Click to explore details</p>
+<!-- HALAMAN 1: LANDING DENGAN HARGA & WA -->
+<div id="main-landing">
+  <img src="kaos_depan.jpg" onclick="goToDetails()">
+  
+  <div class="price-tag">
+    <span class="price-idr">IDR 165.000</span>
+    <span class="price-usd">11$ USD</span>
+  </div>
+
+  <!-- Link WhatsApp dengan Pesan Otomatis -->
+  <a href="https://wa.me/6282137359927?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
+    Buy via WhatsApp
+  </a>
+
+  <p class="hint-text" onclick="goToDetails()">Click Image for Details</p>
 </div>
 
-<!-- HALAMAN 2 -->
+<!-- HALAMAN 2: GRID DETAIL -->
 <button class="btn-back" id="btnBack" onclick="goBack()">◀ Back to Home</button>
 <div id="detail-grid">
   <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"><p>FRONT VIEW</p></div>
@@ -142,11 +178,11 @@
 </div>
 
 <script>
+  // Sama dengan kode sebelumnya, hanya fungsi navigasi & zoom tetap dipertahankan
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
   let currentIndex = 0;
   let scale = 1, pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
 
-  // Navigasi Halaman
   function goToDetails() {
     document.getElementById('main-landing').style.display = 'none';
     document.getElementById('detail-grid').style.display = 'grid';
@@ -159,7 +195,6 @@
     document.getElementById('btnBack').style.display = 'none';
   }
 
-  // Popup & Zoom Logic
   function openViewer(index) {
     currentIndex = index;
     document.getElementById("viewer").style.display = "block";
@@ -173,26 +208,18 @@
   }
 
   function updateContent() {
-    scale = 1; pointX = 0; pointY = 0; // Reset zoom setiap ganti gambar
+    scale = 1; pointX = 0; pointY = 0;
     document.getElementById("imgView").src = imgs[currentIndex];
     updateTransform();
   }
 
-  function nextImg() {
-    currentIndex = (currentIndex + 1) % imgs.length;
-    updateContent();
-  }
-
-  function prevImg() {
-    currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
-    updateContent();
-  }
+  function nextImg() { currentIndex = (currentIndex + 1) % imgs.length; updateContent(); }
+  function prevImg() { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; updateContent(); }
 
   function updateTransform() {
     document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
   }
 
-  // Zoom & Drag (Mouse Events)
   const viewer = document.getElementById("viewer");
   viewer.onwheel = function(e) {
     e.preventDefault();
