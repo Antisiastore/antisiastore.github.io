@@ -8,7 +8,7 @@
 <style>
   body {
     margin: 0;
-    background: #0d0d0d;
+    background: #0d0d0d; /* Background utama hitam */
     color: white;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
@@ -18,14 +18,16 @@
   .logo-header {
     padding: 40px 20px;
     display: flex;
-    justify-content: center; /* Menaruh logo di tengah secara horizontal */
+    justify-content: center;
     align-items: center;
   }
 
   .logo-header img {
-    max-width: 280px; /* Ukuran lebar logo (bisa kamu ubah sesukamu) */
-    height: auto;    /* Menjaga agar logo tidak gepeng */
+    max-width: 280px;
+    height: auto;
     display: block;
+    /* KUNCI: Menghilangkan background putih lewat kode */
+    mix-blend-mode: screen; 
   }
 
   /* --- BAGIAN GRID PRODUK --- */
@@ -55,9 +57,11 @@
     margin-top: 10px;
     font-size: 14px;
     color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
-  /* --- VIEWER (SAAT GAMBAR DIKLIK) --- */
+  /* --- VIEWER --- */
   #viewer {
     display: none;
     position: fixed;
@@ -112,7 +116,6 @@
 </head>
 <body>
 
-<!-- HEADER DENGAN LOGO ANTISIA -->
 <div class="logo-header">
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
@@ -144,7 +147,6 @@
   </div>
 </div>
 
-<!-- TEMPAT VIEWER GAMBAR -->
 <div id="viewer">
   <button class="close" onclick="closeViewer()">✕</button>
   <button class="nav left" onclick="prev()">◀</button>
@@ -155,7 +157,6 @@
 </div>
 
 <script>
-  // Array gambar untuk navigasi viewer
   let imgs = [
     "kaos_depan.jpg",
     "kaos_belakang.jpg",
