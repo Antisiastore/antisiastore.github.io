@@ -11,23 +11,24 @@
     background: #0d0d0d;
     color: white;
     text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
-  /* Bagian Logo */
-  .header-logo {
-    padding: 30px 20px;
+  /* --- BAGIAN LOGO --- */
+  .logo-header {
+    padding: 40px 20px;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Menaruh logo di tengah secara horizontal */
     align-items: center;
   }
 
-  .header-logo img {
-    max-width: 280px; /* Ukuran logo, bisa kamu sesuaikan */
-    height: auto;
-    filter: drop-shadow(0px 0px 10px rgba(255, 0, 0, 0.2)); /* Efek bayangan halus merah */
+  .logo-header img {
+    max-width: 280px; /* Ukuran lebar logo (bisa kamu ubah sesukamu) */
+    height: auto;    /* Menjaga agar logo tidak gepeng */
+    display: block;
   }
 
+  /* --- BAGIAN GRID PRODUK --- */
   .grid {
     display: flex;
     flex-direction: column;
@@ -42,29 +43,21 @@
     border-radius: 12px;
     width: 90%;
     max-width: 320px;
-    transition: transform 0.2s;
-  }
-
-  .card:hover {
-    transform: scale(1.02);
   }
 
   .card img {
     width: 100%;
     border-radius: 10px;
     cursor: pointer;
-    display: block;
   }
 
   .card p {
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #cccccc;
+    color: #aaa;
   }
 
-  /* VIEWER SETTINGS */
+  /* --- VIEWER (SAAT GAMBAR DIKLIK) --- */
   #viewer {
     display: none;
     position: fixed;
@@ -72,7 +65,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0,0,0,0.95);
     z-index: 999;
   }
 
@@ -88,25 +81,22 @@
   .viewer-wrap img {
     max-width: 95%;
     max-height: 90vh;
-    object-fit: contain;
   }
 
-  /* NAVIGATION */
   .nav {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 35px;
+    font-size: 30px;
     background: none;
     border: none;
     color: white;
     cursor: pointer;
-    padding: 20px;
-    z-index: 1000;
+    padding: 10px;
   }
 
-  .left { left: 5px; }
-  .right { right: 5px; }
+  .left { left: 10px; }
+  .right { right: 10px; }
 
   .close {
     position: fixed;
@@ -117,15 +107,13 @@
     border: none;
     color: white;
     cursor: pointer;
-    z-index: 1000;
   }
 </style>
 </head>
 <body>
 
-<!-- Bagian Logo Utama -->
-<div class="header-logo">
-  <!-- Pastikan nama file di bawah ini sesuai dengan nama file logo di foldermu -->
+<!-- HEADER DENGAN LOGO ANTISIA -->
+<div class="logo-header">
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
@@ -156,18 +144,18 @@
   </div>
 </div>
 
-<!-- VIEWER POPUP -->
+<!-- TEMPAT VIEWER GAMBAR -->
 <div id="viewer">
   <button class="close" onclick="closeViewer()">✕</button>
   <button class="nav left" onclick="prev()">◀</button>
   <button class="nav right" onclick="next()">▶</button>
-
   <div class="viewer-wrap">
     <img id="imgView">
   </div>
 </div>
 
 <script>
+  // Array gambar untuk navigasi viewer
   let imgs = [
     "kaos_depan.jpg",
     "kaos_belakang.jpg",
@@ -181,13 +169,11 @@
   function openViewer(n) {
     i = n;
     document.getElementById("viewer").style.display = "block";
-    document.body.style.overflow = "hidden"; // Mencegah scrolling saat viewer buka
     show();
   }
 
   function closeViewer() {
     document.getElementById("viewer").style.display = "none";
-    document.body.style.overflow = "auto"; // Mengaktifkan scroll kembali
   }
 
   function show() {
@@ -203,11 +189,6 @@
     i = (i - 1 + imgs.length) % imgs.length;
     show();
   }
-
-  // Menutup viewer dengan tombol 'Esc' di keyboard
-  document.addEventListener('keydown', function(e) {
-    if (e.key === "Escape") closeViewer();
-  });
 </script>
 
 </body>
