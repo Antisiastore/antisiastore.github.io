@@ -1,4 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANTISIA STORE</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0d0d0d;
+  color:white;
+  text-align:center;
+}
+
+h1{ margin:20px; }
+
+.grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:20px;
+  padding:20px;
+}
+
+.card{
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:10px;
+  width:220px;
+}
+
+.card img{
+  width:100%;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* VIEWER */
+#viewer{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+#zoomWrapper{
+  width:90vw;
+  height:80vh;
+  overflow:hidden;
+  position:relative;
+}
+
+#viewerImg{
+  position:absolute;
+  top:50%;
+  left:50%;
+  max-width:80vw;
+  max-height:80vh;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.nav{
+  position:absolute;
+  top:50%;
+  font-size:40px;
+  color:white;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+
+.left{ left:20px; }
+.right{ right:20px; }
+
+.close{
+  position:absolute;
+  top:20px;
+  right:20px;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.zoom-control{
+  position:fixed;
+  bottom:20px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>ANTISIA STORE</h1>
+
+<div class="grid">
+
+<div class="card">
+<img src="kaos_depan.jpg" onclick="openViewer(0)">
+<p>Kaos Depan</p>
+</div>
+
+<div class="card">
+<img src="kaos_belakang.jpg" onclick="openViewer(1)">
+<p>Kaos Belakang</p>
+</div>
+
+<div class="card">
+<img src="model_depan.jpg" onclick="openViewer(2)">
+<p>Model Depan</p>
+</div>
+
+<div class="card">
+<img src="model_belakang.jpg" onclick="openViewer(3)">
+<p>Model Belakang</p>
+</div>
+
+<div class="card">
+<img src="detail.jpg" onclick="openViewer(4)">
+<p>Detail</p>
+</div>
+
+</div>
+
+<!-- VIEWER -->
+<div id="viewer">
+<span class="close" onclick="closeViewer()">✕</span>
+
+<button class="nav left" onclick="prevImage()">◀</button>
+
+<div id="zoomWrapper">
+<img id="viewerImg">
+</div>
+
+<button class="nav right" onclick="nextImage()">▶</button>
+
+<div class="zoom-control">
+<button onclick="zoomIn()">+</button>
+<button onclick="zoomOut()">-</button>
+</div>
+
+</div>
+
 <script>
+window.onload = function(){
+
 let images = [
 "kaos_depan.jpg",
 "kaos_belakang.jpg",
@@ -9,94 +160,52 @@ let images = [
 
 let current = 0;
 let scale = 1;
-let posX = 0;
-let posY = 0;
 
-let isDragging = false;
-let startX, startY;
-
-function openViewer(i){
-  current = i;
-  document.getElementById("viewer").style.display="flex";
-  show();
+window.openViewer = function(i){
+current = i;
+document.getElementById("viewer").style.display="flex";
+show();
 }
 
-function closeViewer(){
-  document.getElementById("viewer").style.display="none";
+window.closeViewer = function(){
+document.getElementById("viewer").style.display="none";
 }
 
 function show(){
-  let img = document.getElementById("viewerImg");
-  img.src = images[current];
-
-  // RESET FIX
-  scale = 1;
-  posX = 0;
-  posY = 0;
-
-  img.style.transform = "translate(-50%, -50%) scale(1)";
+let img = document.getElementById("viewerImg");
+img.src = images[current];
+scale = 1;
+img.style.transform = "translate(-50%,-50%) scale(1)";
 }
 
-function nextImage(){
-  current = (current+1)%images.length;
-  show();
+window.nextImage = function(){
+current = (current+1)%images.length;
+show();
 }
 
-function prevImage(){
-  current = (current-1+images.length)%images.length;
-  show();
+window.prevImage = function(){
+current = (current-1+images.length)%images.length;
+show();
 }
 
-// ZOOM FIX (smooth)
-function zoomIn(){
-  scale += 0.2;
-  applyTransform();
+window.zoomIn = function(){
+scale += 0.2;
+apply();
 }
 
-function zoomOut(){
-  scale -= 0.2;
-  if(scale < 1) scale = 1;
-  applyTransform();
+window.zoomOut = function(){
+scale -= 0.2;
+if(scale < 1) scale = 1;
+apply();
 }
 
-function applyTransform(){
-  let img = document.getElementById("viewerImg");
-
-  img.style.transform =
-    "translate(calc(-50% + " + posX + "px), calc(-50% + " + posY + "px)) scale(" + scale + ")";
+function apply(){
+let img = document.getElementById("viewerImg");
+img.style.transform = "translate(-50%,-50%) scale("+scale+")";
 }
 
-// DRAG FIX
-const wrapper = document.getElementById("zoomWrapper");
-
-wrapper.addEventListener("mousedown", (e)=>{
-  isDragging = true;
-  startX = e.clientX - posX;
-  startY = e.clientY - posY;
-  wrapper.style.cursor = "grabbing";
-});
-
-document.addEventListener("mouseup", ()=>{
-  isDragging = false;
-  wrapper.style.cursor = "grab";
-});
-
-document.addEventListener("mousemove", (e)=>{
-  if(isDragging){
-    posX = e.clientX - startX;
-    posY = e.clientY - startY;
-    applyTransform();
-  }
-});
-
-// SCROLL ZOOM FIX
-wrapper.addEventListener("wheel", (e)=>{
-  e.preventDefault();
-
-  if(e.deltaY < 0){
-    zoomIn();
-  } else {
-    zoomOut();
-  }
-});
+}
 </script>
+
+</body>
+</html>
