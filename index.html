@@ -6,31 +6,28 @@
 <title>ANTISIA STORE</title>
 
 <style>
+  /* Dasar Halaman */
   body {
     margin: 0;
-    background: #000000; /* Hitam pekat agar menyatu */
+    background: #000000; /* Hitam pekat */
     color: white;
     text-align: center;
-    font-family: 'Courier New', Courier, monospace; /* Nuansa industrial */
+    font-family: 'Courier New', Courier, monospace;
   }
 
-  /* --- BAGIAN LOGO --- */
+  /* --- BAGIAN LOGO (DIBERSIHKAN) --- */
   .logo-header {
     padding: 50px 20px;
     display: flex;
     justify-content: center;
-    background: #000;
+    align-items: center;
   }
 
   .logo-header img {
-    max-width: 300px;
+    max-width: 280px; /* Sesuaikan lebar logo di sini */
     height: auto;
     display: block;
-    
-    /* TRICK: Menghapus putih dan menajamkan warna merah */
-    /* Kita gunakan 'screen' dan filter contrast tinggi */
-    mix-blend-mode: screen;
-    filter: contrast(120%) brightness(110%);
+    /* Tidak perlu mix-blend-mode lagi karena file sudah transparan */
   }
 
   /* --- GRID PRODUK --- */
@@ -45,17 +42,17 @@
   .card {
     background: #111111;
     padding: 15px;
-    border: 1px solid #333; /* Border tipis industrial */
-    border-radius: 0px; /* Siku-siku agar terasa lebih tegas */
+    border: 1px solid #222;
     width: 90%;
     max-width: 350px;
+    border-radius: 4px;
   }
 
   .card img {
     width: 100%;
-    filter: grayscale(20%); /* Sedikit gaya vintage */
     cursor: pointer;
     display: block;
+    border-radius: 2px;
   }
 
   .card p {
@@ -66,7 +63,7 @@
     color: #888;
   }
 
-  /* --- VIEWER --- */
+  /* --- VIEWER POPUP --- */
   #viewer {
     display: none;
     position: fixed;
@@ -89,9 +86,9 @@
   .viewer-wrap img {
     max-width: 95%;
     max-height: 85vh;
-    border: 1px solid #444;
   }
 
+  /* Navigasi */
   .nav {
     position: fixed;
     top: 50%;
@@ -99,12 +96,13 @@
     font-size: 40px;
     background: none;
     border: none;
-    color: #555;
+    color: #444;
     cursor: pointer;
+    padding: 10px;
   }
 
-  .left { left: 10px; }
-  .right { right: 10px; }
+  .left { left: 5px; }
+  .right { right: 5px; }
 
   .close {
     position: fixed;
@@ -120,38 +118,36 @@
 </head>
 <body>
 
+<!-- Header Logo -->
 <div class="logo-header">
-  <!-- Pastikan file logo_antisia.png ada di folder yang sama -->
   <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
+<!-- List Produk -->
 <div class="grid">
   <div class="card">
     <img src="kaos_depan.jpg" onclick="openViewer(0)">
-    <p>Front Side</p>
+    <p>Front Article</p>
   </div>
-
   <div class="card">
     <img src="kaos_belakang.jpg" onclick="openViewer(1)">
-    <p>Back Side</p>
+    <p>Back Article</p>
   </div>
-
   <div class="card">
     <img src="model_depan.jpg" onclick="openViewer(2)">
-    <p>In-Frame Front</p>
+    <p>Lookbook 01</p>
   </div>
-
   <div class="card">
     <img src="model_belakang.jpg" onclick="openViewer(3)">
-    <p>In-Frame Back</p>
+    <p>Lookbook 02</p>
   </div>
-
   <div class="card">
     <img src="detail.jpg" onclick="openViewer(4)">
-    <p>Product Detail</p>
+    <p>Details</p>
   </div>
 </div>
 
+<!-- Viewer -->
 <div id="viewer">
   <button class="close" onclick="closeViewer()">✕</button>
   <button class="nav left" onclick="prev()">◀</button>
@@ -162,9 +158,7 @@
 </div>
 
 <script>
-  let imgs = [
-    "kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg", "detail.jpg"
-  ];
+  let imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg", "detail.jpg"];
   let i = 0;
 
   function openViewer(n) {
