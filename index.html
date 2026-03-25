@@ -3,26 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE - ZOOM VERSION</title>
+<title>ANTISIA STORE</title>
 
 <style>
   body {
-    margin: 0;
-    padding: 0;
-    background: #000000;
-    color: #ffffff;
+    margin: 0; padding: 0;
+    background: #000; color: #fff;
     font-family: Arial, sans-serif;
     text-align: center;
-    overflow-x: hidden;
   }
 
-  /* HEADER LOGO */
-  .logo-header { padding: 50px 20px; display: flex; justify-content: center; }
+  .logo-header { padding: 50px 20px; }
   .logo-header img { max-width: 250px; height: auto; }
 
-  /* GRID PRODUK */
-  .grid-container {
-    display: grid;
+  /* 1. TAMPILAN HALAMAN DEPAN (SINGLE IMAGE) */
+  #main-landing {
+    padding: 20px;
+    cursor: pointer;
+    transition: opacity 0.5s;
+  }
+  #main-landing img {
+    max-width: 500px;
+    width: 90%;
+    border: 1px solid #1a1a1a;
+  }
+  #main-landing p {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #555;
+    margin-top: 20px;
+  }
+
+  /* 2. GRID DETAIL (TERSEMBUNYI DULU) */
+  #detail-grid {
+    display: none; /* Disembunyikan awalnya */
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     padding: 15px;
@@ -36,62 +50,37 @@
     padding: 10px;
     cursor: pointer;
   }
-
   .product-card img { width: 100%; display: block; }
-  .product-card p { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-top: 10px;}
 
-  /* --- VIEWER ZOOM ENGINE --- */
+  /* 3. VIEWER ZOOM (SAMA SEPERTI SEBELUMNYA) */
   #viewer {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: rgba(0,0,0,0.98);
     z-index: 10000;
-    overflow: hidden; /* Penting agar gambar tidak keluar dari kotak popup */
-    touch-action: none; /* Mencegah scroll HP saat zoom */
+    overflow: hidden;
+    touch-action: none;
   }
-
   .viewer-wrap {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
     cursor: grab;
   }
-
-  .viewer-wrap:active { cursor: grabbing; }
-
   #imgView {
-    max-width: 80%;
-    max-height: 80vh;
-    transition: transform 0.1s ease-out; /* Animasi zoom halus */
-    transform-origin: center; /* Zoom mulai dari tengah */
-    user-select: none;
-    -webkit-user-drag: none;
+    max-width: 80%; max-height: 80vh;
+    transition: transform 0.1s ease-out;
+    transform-origin: center;
   }
 
-  /* NAVIGASI */
   .btn-ui {
-    position: fixed;
-    background: rgba(255,255,255,0.1);
-    border: none;
-    color: #fff;
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 10001;
-    padding: 10px 20px;
-    border-radius: 5px;
+    position: fixed; background: none; border: none;
+    color: #fff; font-size: 30px; cursor: pointer; z-index: 10001;
   }
+  .btn-close { top: 20px; right: 20px; font-size: 40px; }
 
-  .btn-close { top: 20px; right: 20px; font-size: 40px; background: none; }
-  .btn-prev { left: 10px; top: 50%; transform: translateY(-50%); }
-  .btn-next { right: 10px; top: 50%; transform: translateY(-50%); }
-
-  @media (max-width: 500px) { .grid-container { grid-template-columns: 1fr; } }
+  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -100,117 +89,93 @@
   <img src="logo_antisia.png" alt="Logo">
 </div>
 
-<div class="grid-container">
+<!-- HALAMAN 1: TAMPILAN DEPAN -->
+<div id="main-landing" onclick="showDetails()">
+  <img src="kaos_depan.jpg" alt="Antisia Main">
+  <p>CLICK TO VIEW DETAILS</p>
+</div>
+
+<!-- HALAMAN 2: GRID 4 GAMBAR -->
+<div id="detail-grid">
   <div class="product-card" onclick="openViewer(0)">
-    <img src="kaos_depan.jpg">
-    <p>Front Side</p>
+    <img src="kaos_depan.jpg"><p>FRONT</p>
   </div>
   <div class="product-card" onclick="openViewer(1)">
-    <img src="kaos_belakang.jpg">
-    <p>Back Side</p>
+    <img src="kaos_belakang.jpg"><p>BACK</p>
   </div>
   <div class="product-card" onclick="openViewer(2)">
-    <img src="model_depan.jpg">
-    <p>Lookbook 01</p>
+    <img src="model_depan.jpg"><p>LOOK 01</p>
   </div>
   <div class="product-card" onclick="openViewer(3)">
-    <img src="model_belakang.jpg">
-    <p>Lookbook 02</p>
+    <img src="model_belakang.jpg"><p>LOOK 02</p>
   </div>
 </div>
 
-<!-- VIEWER ELEMENT -->
+<!-- POPUP ZOOM -->
 <div id="viewer">
   <button class="btn-ui btn-close" onclick="closeViewer()">✕</button>
-  <button class="btn-ui btn-prev" onclick="prev()">◀</button>
-  <button class="btn-ui btn-next" onclick="next()">▶</button>
   <div class="viewer-wrap" id="dropzone">
     <img id="imgView" src="">
   </div>
 </div>
 
 <script>
+  // Fungsi untuk pindah halaman
+  function showDetails() {
+    document.getElementById('main-landing').style.display = 'none';
+    document.getElementById('detail-grid').style.display = 'grid';
+  }
+
+  // Logika Zoom (Sama seperti sebelumnya)
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
   let currentIndex = 0;
   let scale = 1;
-  let pointX = 0;
-  let pointY = 0;
-  let startX = 0;
-  let startY = 0;
-  let isDragging = false;
-
-  const viewer = document.getElementById("viewer");
-  const imgView = document.getElementById("imgView");
-  const dropzone = document.getElementById("dropzone");
+  let pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
 
   function openViewer(index) {
     currentIndex = index;
-    viewer.style.display = "block";
+    document.getElementById("viewer").style.display = "block";
     resetZoom();
-    updateImage();
+    document.getElementById("imgView").src = imgs[currentIndex];
     document.body.style.overflow = "hidden";
   }
 
   function closeViewer() {
-    viewer.style.display = "none";
+    document.getElementById("viewer").style.display = "none";
     document.body.style.overflow = "auto";
   }
 
-  function updateImage() {
-    imgView.src = imgs[currentIndex];
-  }
-
   function resetZoom() {
-    scale = 1;
-    pointX = 0;
-    pointY = 0;
+    scale = 1; pointX = 0; pointY = 0;
     updateTransform();
   }
 
   function updateTransform() {
-    imgView.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+    document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
   }
 
-  // --- LOGIKA ZOOM (SCROLL) ---
+  // Zoom & Drag Logic
+  const viewer = document.getElementById("viewer");
   viewer.onwheel = function(e) {
     e.preventDefault();
-    const delta = e.deltaY;
-    if (delta > 0) scale = Math.max(1, scale - 0.2); // Zoom Out (min 1x)
-    else scale = Math.min(5, scale + 0.2); // Zoom In (max 5x)
+    if (e.deltaY > 0) scale = Math.max(1, scale - 0.2);
+    else scale = Math.min(5, scale + 0.2);
     updateTransform();
   }
 
-  // --- LOGIKA GESER (DRAG) ---
+  const dropzone = document.getElementById("dropzone");
   dropzone.onmousedown = function(e) {
-    e.preventDefault();
     isDragging = true;
     startX = e.clientX - pointX;
     startY = e.clientY - pointY;
   }
-
   window.onmousemove = function(e) {
     if (!isDragging) return;
     pointX = e.clientX - startX;
     pointY = e.clientY - startY;
     updateTransform();
   }
-
-  window.onmouseup = function() {
-    isDragging = false;
-  }
-
-  // NAVIGASI
-  function next() {
-    currentIndex = (currentIndex + 1) % imgs.length;
-    resetZoom();
-    updateImage();
-  }
-
-  function prev() {
-    currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
-    resetZoom();
-    updateImage();
-  }
+  window.onmouseup = function() { isDragging = false; }
 </script>
 
 </body>
