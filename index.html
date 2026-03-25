@@ -6,7 +6,7 @@
 <title>ANTISIA STORE - OFFICIAL</title>
 
 <style>
-  /* 1. DASAR & ATMOSPHERE */
+  /* 1. ATMOSPHERE */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #1a1a1a; }
@@ -29,65 +29,48 @@
     z-index: 1000;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-  .logo-header img { 
-    max-width: 250px; width: 65%; height: auto; 
-    display: block; margin: 0 auto;
-  }
+  .logo-header img { max-width: 250px; width: 65%; height: auto; display: block; margin: 0 auto; }
 
   /* 3. HALAMAN 1: LANDING */
   #main-landing { padding: 50px 20px; animation: fadeIn 1.5s forwards; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  .hero-img {
-    max-width: 480px; width: 90%;
-    border: 1px solid #222;
-    cursor: pointer;
-    transition: 0.4s;
-  }
+  .hero-img { max-width: 480px; width: 90%; border: 1px solid #222; cursor: pointer; transition: 0.4s; }
   .hero-img:hover { border-color: #ff0000; transform: scale(1.01); }
 
   .price-tag { margin-top: 30px; }
   .price-idr { font-size: 24px; font-weight: 900; letter-spacing: 5px; display: block; }
 
   .btn-wa {
-    display: inline-block;
-    margin-top: 35px;
-    background-color: transparent;
-    color: #fff;
-    padding: 15px 45px;
-    text-decoration: none;
-    border: 1px solid #333;
-    font-size: 11px;
-    letter-spacing: 5px;
-    transition: 0.4s;
-    text-transform: uppercase;
+    display: inline-block; margin-top: 35px; background-color: transparent; color: #fff;
+    padding: 15px 45px; text-decoration: none; border: 1px solid #333;
+    font-size: 11px; letter-spacing: 5px; transition: 0.4s; text-transform: uppercase;
   }
   .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
-  /* TEKS EXPLORE YANG KEMBALI */
-  .explore-btn {
-    display: block; font-size: 9px; color: #333; margin-top: 40px; 
-    letter-spacing: 8px; cursor: pointer; transition: 0.3s;
-    text-transform: uppercase;
-  }
+  .explore-btn { display: block; font-size: 9px; color: #333; margin-top: 40px; letter-spacing: 8px; cursor: pointer; transition: 0.3s; }
   .explore-btn:hover { color: #fff; }
 
   /* 4. HALAMAN 2: GRID DETAIL */
-  #detail-grid {
-    display: none;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px; padding: 15px;
-    max-width: 900px; margin: 0 auto;
-  }
-  .btn-back {
-    display: none; background: none; border: none;
-    color: #444; padding: 20px; cursor: pointer;
-    margin: 15px 0; font-size: 10px; letter-spacing: 5px;
-    text-transform: uppercase;
-  }
-  .btn-back:hover { color: #fff; }
+  #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; max-width: 900px; margin: 0 auto; }
+  .btn-back { display: none; background: none; border: none; color: #444; padding: 20px; cursor: pointer; margin: 15px 0; font-size: 10px; letter-spacing: 5px; }
   .product-card { background: #050505; border: 1px solid #111; padding: 5px; cursor: pointer; }
-  .product-card img { width: 100%; display: block; }
+  .product-card img { width: 100%; display: block; transition: 0.3s; }
+  .product-card:hover img { opacity: 0.7; }
+
+  /* 5. POPUP VIEWER ZOOM */
+  #viewer {
+    display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0,0,0,0.98);
+    z-index: 10000; overflow: hidden;
+  }
+  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+  #imgView { max-width: 85%; max-height: 85vh; transition: transform 0.1s; cursor: grab; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.5; }
+  .ui-btn:hover { opacity: 1; }
+  .close-x { top: 10px; right: 10px; }
+  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
+  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
 
   @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
@@ -101,31 +84,39 @@
 <!-- HALAMAN 1 -->
 <div id="main-landing">
   <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
-  
   <div class="price-tag">
     <span class="price-idr">IDR 165.000</span>
   </div>
-
-  <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
-    CHECK OUT
-  </a>
-
-  <!-- Teks explore yang sempat hilang kawan -->
+  <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20kaos%20Antisia" class="btn-wa" target="_blank">CHECK OUT</a>
   <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
 <!-- HALAMAN 2 -->
 <button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO CATALOG</button>
-
 <div id="detail-grid">
-  <!-- Daftar 4 gambar dikembalikan di sini kawan -->
-  <div class="product-card"><img src="kaos_depan.jpg"></div>
-  <div class="product-card"><img src="kaos_belakang.jpg"></div>
-  <div class="product-card"><img src="model_depan.jpg"></div>
-  <div class="product-card"><img src="model_belakang.jpg"></div>
+  <!-- Setiap gambar sekarang punya fungsi openViewer kawan! -->
+  <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
+  <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
+  <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"></div>
+  <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
+</div>
+
+<!-- POPUP VIEWER -->
+<div id="viewer">
+  <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
+  <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
+  <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
+  <div class="viewer-wrap" id="dropzone">
+    <img id="imgView" src="">
+  </div>
 </div>
 
 <script>
+  // DAFTAR GAMBAR
+  const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
+  let currentIndex = 0;
+  let scale = 1;
+
   function goToDetails() {
     document.getElementById('main-landing').style.display = 'none';
     document.getElementById('detail-grid').style.display = 'grid';
@@ -137,6 +128,43 @@
     document.getElementById('main-landing').style.display = 'block';
     document.getElementById('detail-grid').style.display = 'none';
     document.getElementById('btnBack').style.display = 'none';
+  }
+
+  // FUNGSI ZOOM VIEWER
+  function openViewer(index) {
+    currentIndex = index;
+    scale = 1;
+    document.getElementById("imgView").src = imgs[currentIndex];
+    document.getElementById("viewer").style.display = "block";
+    document.body.style.overflow = "hidden"; // matikan scroll utama
+    updateTransform();
+  }
+
+  function closeViewer() {
+    document.getElementById("viewer").style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+
+  function nextImg() { currentIndex = (currentIndex + 1) % imgs.length; updateContent(); }
+  function prevImg() { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; updateContent(); }
+
+  function updateContent() {
+    scale = 1;
+    document.getElementById("imgView").src = imgs[currentIndex];
+    updateTransform();
+  }
+
+  function updateTransform() {
+    document.getElementById("imgView").style.transform = `scale(${scale})`;
+  }
+
+  // FITUR ZOOM DENGAN MOUSE WHEEL
+  const viewer = document.getElementById("viewer");
+  viewer.onwheel = function(e) {
+    e.preventDefault();
+    if (e.deltaY > 0) scale = Math.max(1, scale - 0.2);
+    else scale = Math.min(4, scale + 0.2);
+    updateTransform();
   }
 </script>
 
