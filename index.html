@@ -1,226 +1,50 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE - OFFICIAL</title>
+<title>ANTISIA STORE</title>
 
 <style>
-  /* 1. SCROLLBAR MINIMALIS */
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #000; }
-  ::-webkit-scrollbar-thumb { background: #1a1a1a; }
-  
-  /* 2. ATMOSPHERE DARK ELEGANCE */
+  /* 1. DASAR HALAMAN */
   body {
-    margin: 0; padding: 0;
-    background: radial-gradient(circle, #111 0%, #000 100%);
-    background-attachment: fixed;
-    color: #fff;
-    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background: #000000; /* Latar belakang hitam pekat */
+    color: #ffffff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     text-align: center;
   }
 
-  /* 3. HEADER LOGO RAMPING */
-  .logo-header { 
-    padding: 15px 20px;
-    position: sticky; 
-    top: 0; 
-    background: rgba(0,0,0,0.9); 
-    backdrop-filter: blur(10px);
-    z-index: 900;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+  /* 2. HEADER LOGO SALIB (DIPERBAIKI) */
+  .logo-header {
+    padding: 80px 20px 60px 20px; /* Memberi ruang di atas dan bawah logo */
+    display: flex;
+    justify-content: center; /* Membuat logo salib berada tepat di tengah secara horizontal */
+    align-items: center; /* Membuat logo berada di tengah secara vertikal jika ada tinggi ekstra */
   }
-  .logo-header img { 
-    max-width: 250px;
-    width: 65%;
-    height: auto; 
+
+  .logo-header img {
+    /* Mengatur ukuran logo kawan, sesuaikan max-width jika kurang besar/kecil */
+    max-width: 250px; 
+    height: auto;
     display: block;
-    margin: 0 auto;
+    
+    /* TIPS PRO: Jika warna salibnya terlalu gelap di background hitam, */
+    /* kamu bisa hapus tanda komentar (//) di bawah ini untuk membuatnya lebih terang */
+    // filter: brightness(1.2) contrast(1.1); 
   }
-
-  /* 4. HALAMAN 1: MAIN LANDING */
-  #main-landing { padding: 50px 20px 80px 20px; animation: fadeIn 1.5s forwards; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-  .hero-img {
-    max-width: 480px; width: 90%;
-    border: 1px solid #222;
-    cursor: pointer;
-    transition: 0.4s;
-  }
-  .hero-img:hover { border-color: #ff0000; transform: scale(1.01); }
-
-  .price-tag { margin-top: 30px; }
-  .price-idr { font-size: 24px; font-weight: 900; letter-spacing: 5px; display: block; }
-  .price-usd { font-size: 12px; color: #444; display: block; margin-top: 8px; letter-spacing: 2px; }
-
-  /* TOMBOL CHECK OUT */
-  .btn-wa {
-    display: inline-block;
-    margin-top: 35px;
-    background-color: transparent;
-    color: #fff;
-    padding: 15px 45px;
-    text-decoration: none;
-    border: 1px solid #333;
-    font-size: 11px;
-    letter-spacing: 5px;
-    transition: 0.4s;
-    text-transform: uppercase;
-  }
-  .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
-
-  .explore-btn {
-    display: block; font-size: 9px; color: #222; margin-top: 40px; 
-    letter-spacing: 8px; cursor: pointer; transition: 0.3s;
-  }
-  .explore-btn:hover { color: #fff; }
-
-  /* 5. HALAMAN 2: DETAIL GRID */
-  #detail-grid {
-    display: none;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px; padding: 15px;
-    max-width: 900px; margin: 0 auto;
-  }
-  .btn-back {
-    display: none; background: none; border: none;
-    color: #444; padding: 20px; cursor: pointer;
-    margin: 15px 0; font-size: 10px; letter-spacing: 5px;
-  }
-  .btn-back:hover { color: #fff; }
-
-  .product-card { background: #050505; border: 1px solid #111; padding: 8px; cursor: pointer; }
-  .product-card img { width: 100%; display: block; }
-
-  /* 6. POPUP VIEWER ZOOM & DRAG */
-  #viewer {
-    display: none; position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%; background: rgba(0,0,0,0.98);
-    z-index: 10000; overflow: hidden; touch-action: none;
-  }
-  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; cursor: grab; }
-  #imgView { max-width: 85%; max-height: 85vh; transition: transform 0.1s ease-out; transform-origin: center; }
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.4; }
-  .ui-btn:hover { opacity: 1; }
-  .close-x { top: 10px; right: 10px; }
-  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
-  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
-
-  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } .logo-header img { max-width: 200px; } }
 </style>
 </head>
 <body>
 
-<div class="logo-header">
-  <img src="logo_antisia.png" alt="Antisia Logo">
-</div>
-
-<!-- HALAMAN 1 -->
-<div id="main-landing">
-  <!-- Klik gambar langsung ke detail -->
-  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
-  
-  <div class="price-tag">
-    <span class="price-idr">IDR 165.000</span>
-    <span class="price-usd">11$ USD</span>
+  <div class="logo-header">
+    <img src="logo_salib_transparent.png" alt="Antisia Cross Logo">
   </div>
 
-  <!-- Tombol WhatsApp dengan nomor koreksi -->
-  <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">
-    CHECK OUT
-  </a>
-
-  <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
-</div>
-
-<!-- HALAMAN 2 -->
-<button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO GALLERY</button>
-<div id="detail-grid">
-  <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
-  <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
-  <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"></div>
-  <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
-</div>
-
-<!-- POPUP ZOOM -->
-<div id="viewer">
-  <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
-  <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
-  <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
-  <div class="viewer-wrap" id="dropzone">
-    <img id="imgView" src="">
+  <div style="padding: 20px; color: #444; font-size: 12px; letter-spacing: 2px;">
+    COMIMG SOON / UNDER CONSTRUCTION
   </div>
-</div>
-
-<script>
-  // Script navigasi & fungsionalitas kawan
-  const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
-  let currentIndex = 0;
-  let scale = 1, pointX = 0, pointY = 0, startX = 0, startY = 0, isDragging = false;
-
-  function goToDetails() {
-    document.getElementById('main-landing').style.display = 'none';
-    document.getElementById('detail-grid').style.display = 'grid';
-    document.getElementById('btnBack').style.display = 'inline-block';
-    window.scrollTo(0,0);
-  }
-
-  function goBack() {
-    document.getElementById('main-landing').style.display = 'block';
-    document.getElementById('detail-grid').style.display = 'none';
-    document.getElementById('btnBack').style.display = 'none';
-  }
-
-  function openViewer(index) {
-    currentIndex = index;
-    document.getElementById("viewer").style.display = "block";
-    updateContent();
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeViewer() {
-    document.getElementById("viewer").style.display = "none";
-    document.body.style.overflow = "auto";
-  }
-
-  function updateContent() {
-    scale = 1; pointX = 0; pointY = 0;
-    document.getElementById("imgView").src = imgs[currentIndex];
-    updateTransform();
-  }
-
-  function nextImg() { currentIndex = (currentIndex + 1) % imgs.length; updateContent(); }
-  function prevImg() { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; updateContent(); }
-
-  function updateTransform() {
-    document.getElementById("imgView").style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
-  }
-
-  const viewer = document.getElementById("viewer");
-  viewer.onwheel = function(e) {
-    e.preventDefault();
-    if (e.deltaY > 0) scale = Math.max(1, scale - 0.2);
-    else scale = Math.min(5, scale + 0.2);
-    updateTransform();
-  }
-
-  const dropzone = document.getElementById("dropzone");
-  dropzone.onmousedown = function(e) {
-    isDragging = true;
-    startX = e.clientX - pointX;
-    startY = e.clientY - pointY;
-  }
-  window.onmousemove = function(e) {
-    if (!isDragging) return;
-    pointX = e.clientX - startX;
-    pointY = e.clientY - startY;
-    updateTransform();
-  }
-  window.onmouseup = function() { isDragging = false; }
-</script>
 
 </body>
 </html>
