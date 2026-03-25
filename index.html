@@ -6,7 +6,7 @@
 <title>ANTISIA STORE</title>
 
 <style>
-body {
+body{
   margin:0;
   font-family:Arial;
   background:#0d0d0d;
@@ -14,11 +14,11 @@ body {
   text-align:center;
 }
 
-h1 {
+h1{
   margin:20px;
 }
 
-.grid {
+.grid{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
@@ -26,7 +26,7 @@ h1 {
   padding:20px;
 }
 
-.card {
+.card{
   background:#1a1a1a;
   padding:15px;
   border-radius:10px;
@@ -34,17 +34,17 @@ h1 {
   transition:0.3s;
 }
 
-.card:hover {
+.card:hover{
   transform:scale(1.05);
 }
 
-.card img {
+.card img{
   width:100%;
   border-radius:10px;
   cursor:pointer;
 }
 
-button {
+button{
   margin-top:10px;
   padding:10px;
   border:none;
@@ -53,7 +53,8 @@ button {
   cursor:pointer;
 }
 
-#viewer {
+/* VIEWER */
+#viewer{
   display:none;
   position:fixed;
   top:0;
@@ -67,27 +68,37 @@ button {
   z-index:999;
 }
 
-#viewer img {
-  max-width:80vw;
-  max-height:80vh;
-  transition:transform 0.2s;
+#zoomWrapper{
+  width:90vw;
+  height:80vh;
+  overflow:hidden;
+  position:relative;
+  cursor:grab;
 }
 
-.nav {
+#viewerImg{
   position:absolute;
   top:50%;
-  transform:translateY(-50%);
+  left:50%;
+  transform:translate(-50%,-50%) scale(1);
+  transform-origin:center;
+}
+
+.nav{
+  position:absolute;
+  top:50%;
   font-size:40px;
   color:white;
   background:none;
   border:none;
   cursor:pointer;
+  z-index:10;
 }
 
-.left { left:20px; }
-.right { right:20px; }
+.left{ left:20px; }
+.right{ right:20px; }
 
-.close {
+.close{
   position:absolute;
   top:20px;
   right:20px;
@@ -95,8 +106,16 @@ button {
   cursor:pointer;
 }
 
-.controls {
-  margin-top:10px;
+.zoom-control{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:9999;
+}
+
+.zoom-control button{
+  margin:5px;
 }
 </style>
 
@@ -111,58 +130,50 @@ button {
 <img src="kaos_depan.jpg" onclick="openViewer(0)">
 <h3>Kaos Depan</h3>
 <p>Rp 150.000</p>
-<a href="https://wa.me/628XXXXXXXXXX?text=Pesan%20Kaos%20ANTISIA">
-<button>BELI</button></a>
 </div>
 
 <div class="card">
 <img src="kaos_belakang.jpg" onclick="openViewer(1)">
 <h3>Kaos Belakang</h3>
 <p>Rp 150.000</p>
-<a href="https://wa.me/628XXXXXXXXXX?text=Pesan%20Kaos%20ANTISIA">
-<button>BELI</button></a>
 </div>
 
 <div class="card">
 <img src="model_depan.jpg" onclick="openViewer(2)">
 <h3>Model Depan</h3>
 <p>Rp 150.000</p>
-<a href="https://wa.me/628XXXXXXXXXX?text=Pesan%20Kaos%20ANTISIA">
-<button>BELI</button></a>
 </div>
 
 <div class="card">
 <img src="model_belakang.jpg" onclick="openViewer(3)">
 <h3>Model Belakang</h3>
 <p>Rp 150.000</p>
-<a href="https://wa.me/628XXXXXXXXXX?text=Pesan%20Kaos%20ANTISIA">
-<button>BELI</button></a>
 </div>
 
 <div class="card">
 <img src="detail.jpg" onclick="openViewer(4)">
 <h3>Detail</h3>
 <p>Rp 150.000</p>
-<a href="https://wa.me/628XXXXXXXXXX?text=Pesan%20Kaos%20ANTISIA">
-<button>BELI</button></a>
 </div>
 
 </div>
 
-<!-- VIEWER -->
+<!-- POPUP VIEWER -->
 <div id="viewer">
-<span class="close" onclick="closeViewer()">✕</span>
+  <span class="close" onclick="closeViewer()">✕</span>
 
-<button class="nav left" onclick="prevImage()">◀</button>
+  <button class="nav left" onclick="prevImage()">◀</button>
 
-<img id="viewerImg">
+  <div id="zoomWrapper">
+    <img id="viewerImg">
+  </div>
 
-<button class="nav right" onclick="nextImage()">▶</button>
+  <button class="nav right" onclick="nextImage()">▶</button>
 
-<div class="controls">
-<button onclick="zoomIn()">+</button>
-<button onclick="zoomOut()">-</button>
-</div>
+  <div class="zoom-control">
+    <button onclick="zoomIn()">+</button>
+    <button onclick="zoomOut()">-</button>
+  </div>
 </div>
 
 <script>
@@ -176,52 +187,87 @@ let images = [
 
 let current = 0;
 let scale = 1;
+let posX = 0;
+let posY = 0;
+
+let isDragging = false;
+let startX, startY;
 
 function openViewer(i){
-current = i;
-document.getElementById("viewer").style.display="flex";
-show();
+  current = i;
+  document.getElementById("viewer").style.display="flex";
+  show();
 }
 
 function closeViewer(){
-document.getElementById("viewer").style.display="none";
+  document.getElementById("viewer").style.display="none";
 }
 
 function show(){
-let img = document.getElementById("viewerImg");
-img.src = images[current];
-scale = 1;
-update();
+  let img = document.getElementById("viewerImg");
+  img.src = images[current];
+  scale = 1;
+  posX = 0;
+  posY = 0;
+  updateTransform();
 }
 
 function nextImage(){
-current = (current+1)%images.length;
-show();
+  current = (current+1)%images.length;
+  show();
 }
 
 function prevImage(){
-current = (current-1+images.length)%images.length;
-show();
+  current = (current-1+images.length)%images.length;
+  show();
 }
 
 function zoomIn(){
-scale+=0.2;
-update();
+  scale += 0.3;
+  updateTransform();
 }
 
 function zoomOut(){
-scale-=0.2;
-if(scale<1) scale=1;
-update();
+  scale -= 0.3;
+  if(scale < 1) scale = 1;
+  updateTransform();
 }
 
-function update(){
-document.getElementById("viewerImg").style.transform="scale("+scale+")";
+function updateTransform(){
+  let img = document.getElementById("viewerImg");
+  img.style.transform =
+    "translate(calc(-50% + " + posX + "px), calc(-50% + " + posY + "px)) scale(" + scale + ")";
 }
 
-document.getElementById("viewerImg").addEventListener("wheel", function(e){
-e.preventDefault();
-if(e.deltaY<0){zoomIn()}else{zoomOut()}
+// DRAG MOUSE
+const wrapper = document.getElementById("zoomWrapper");
+
+wrapper.addEventListener("mousedown", (e)=>{
+  isDragging = true;
+  startX = e.clientX - posX;
+  startY = e.clientY - posY;
+});
+
+document.addEventListener("mouseup", ()=>{
+  isDragging = false;
+});
+
+document.addEventListener("mousemove", (e)=>{
+  if(isDragging){
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    updateTransform();
+  }
+});
+
+// SCROLL ZOOM
+wrapper.addEventListener("wheel", (e)=>{
+  e.preventDefault();
+  if(e.deltaY < 0){
+    zoomIn();
+  } else {
+    zoomOut();
+  }
 });
 </script>
 
