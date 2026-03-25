@@ -8,10 +8,10 @@
 <style>
 body{
   margin:0;
-  font-family:Arial;
   background:#0d0d0d;
   color:white;
   text-align:center;
+  font-family:Arial;
 }
 
 h1{margin:20px;}
@@ -27,9 +27,9 @@ h1{margin:20px;}
 .card{
   background:#1a1a1a;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
   width:90%;
-  max-width:300px;
+  max-width:320px;
 }
 
 .card img{
@@ -47,20 +47,31 @@ h1{margin:20px;}
   width:100%;
   height:100%;
   background:black;
+  z-index:999;
+}
+
+/* WRAPPER (INI KUNCI) */
+.viewer-wrap{
+  width:100%;
+  height:100%;
+  overflow:auto;
+  display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
 }
 
-#viewer img{
-  max-width:90%;
-  max-height:70%;
+/* GAMBAR NORMAL */
+.viewer-wrap img{
+  max-width:100%;
+  height:auto;
 }
 
+/* NAV */
 .nav{
-  position:absolute;
+  position:fixed;
   top:50%;
-  font-size:35px;
+  transform:translateY(-50%);
+  font-size:30px;
   background:none;
   border:none;
   color:white;
@@ -70,15 +81,10 @@ h1{margin:20px;}
 .right{right:10px;}
 
 .close{
-  position:absolute;
+  position:fixed;
   top:20px;
   right:20px;
   font-size:30px;
-}
-
-.zoom{
-  position:absolute;
-  bottom:20px;
 }
 </style>
 
@@ -88,26 +94,43 @@ h1{margin:20px;}
 <h1>ANTISIA STORE</h1>
 
 <div class="grid">
+  <div class="card">
+    <img src="kaos_depan.jpg" onclick="openViewer(0)">
+    <p>Kaos Depan</p>
+  </div>
 
-<img src="kaos_depan.jpg" onclick="openViewer(0)">
-<img src="kaos_belakang.jpg" onclick="openViewer(1)">
-<img src="model_depan.jpg" onclick="openViewer(2)">
-<img src="model_belakang.jpg" onclick="openViewer(3)">
-<img src="detail.jpg" onclick="openViewer(4)">
+  <div class="card">
+    <img src="kaos_belakang.jpg" onclick="openViewer(1)">
+    <p>Kaos Belakang</p>
+  </div>
 
+  <div class="card">
+    <img src="model_depan.jpg" onclick="openViewer(2)">
+    <p>Model Depan</p>
+  </div>
+
+  <div class="card">
+    <img src="model_belakang.jpg" onclick="openViewer(3)">
+    <p>Model Belakang</p>
+  </div>
+
+  <div class="card">
+    <img src="detail.jpg" onclick="openViewer(4)">
+    <p>Detail</p>
+  </div>
 </div>
 
+<!-- VIEWER -->
 <div id="viewer">
-<span class="close" onclick="closeViewer()">✕</span>
 
+<button class="close" onclick="closeViewer()">✕</button>
 <button class="nav left" onclick="prev()">◀</button>
-<img id="imgView">
 <button class="nav right" onclick="next()">▶</button>
 
-<div class="zoom">
-<button onclick="zoomIn()">+</button>
-<button onclick="zoomOut()">-</button>
+<div class="viewer-wrap">
+  <img id="imgView">
 </div>
+
 </div>
 
 <script>
@@ -120,44 +143,29 @@ let imgs=[
 ];
 
 let i=0;
-let scale=1;
 
 function openViewer(n){
-i=n;
-document.getElementById("viewer").style.display="flex";
-show();
+  i=n;
+  document.getElementById("viewer").style.display="block";
+  show();
 }
 
 function closeViewer(){
-document.getElementById("viewer").style.display="none";
+  document.getElementById("viewer").style.display="none";
 }
 
 function show(){
-let img=document.getElementById("imgView");
-img.src=imgs[i];
-scale=1;
-img.style.transform="scale(1)";
+  document.getElementById("imgView").src=imgs[i];
 }
 
 function next(){
-i=(i+1)%imgs.length;
-show();
+  i=(i+1)%imgs.length;
+  show();
 }
 
 function prev(){
-i=(i-1+imgs.length)%imgs.length;
-show();
-}
-
-function zoomIn(){
-scale+=0.2;
-document.getElementById("imgView").style.transform="scale("+scale+")";
-}
-
-function zoomOut(){
-scale-=0.2;
-if(scale<1) scale=1;
-document.getElementById("imgView").style.transform="scale("+scale+")";
+  i=(i-1+imgs.length)%imgs.length;
+  show();
 }
 </script>
 
