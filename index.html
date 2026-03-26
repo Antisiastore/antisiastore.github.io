@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA STORE - OFFICIAL</title>
+<title>ANTISIA - ALTERNATIVE GEAR SUPPLY</title>
 
 <style>
-  /* 1. ATMOSPHERE */
+  /* 1. DASAR & ATMOSFER (Vibe Industrial) */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #1a1a1a; }
@@ -18,28 +18,74 @@
     color: #fff;
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
+    overflow-x: hidden;
   }
 
-  /* 2. HEADER LOGO */
+  /* 2. FITUR MARQUEE (Teks Berjalan Merah) */
+  .marquee-container {
+    background: #ff0000;
+    color: #000;
+    padding: 6px 0;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    overflow: hidden;
+    white-space: nowrap;
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 2000;
+  }
+  .marquee-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 20s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+  }
+
+  /* 3. HEADER & LOGO */
   .logo-header { 
-    padding: 15px 20px;
-    position: sticky; top: 0; 
-    background: rgba(0,0,0,0.9); 
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 70px 20px 20px 20px; /* Jarak aman dari marquee */
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
   }
-  .logo-header img { max-width: 250px; width: 65%; height: auto; display: block; margin: 0 auto; }
+  .logo-header img { 
+    max-width: 240px; 
+    width: 60%; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto; 
+  }
 
-  /* 3. HALAMAN 1: LANDING */
-  #main-landing { padding: 50px 20px; animation: fadeIn 1.5s forwards; }
+  .brand-motto {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 4px;
+    margin-top: 15px;
+    text-transform: uppercase;
+  }
+
+  /* 4. HALAMAN UTAMA (Landing) */
+  #main-landing { padding: 40px 20px; animation: fadeIn 1.2s forwards; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  .hero-img { max-width: 480px; width: 90%; border: 1px solid #222; cursor: pointer; transition: 0.4s; }
-  .hero-img:hover { border-color: #ff0000; transform: scale(1.01); }
+  .hero-img { 
+    max-width: 450px; width: 90%; 
+    border: 1px solid #222; 
+    cursor: pointer; 
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  }
+  .hero-img:hover { 
+    border-color: #ff0000; 
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+    transform: translateY(-8px);
+  }
 
   .price-tag { margin-top: 30px; }
-  .price-idr { font-size: 24px; font-weight: 900; letter-spacing: 5px; display: block; }
+  .price-idr { font-size: 26px; font-weight: 900; letter-spacing: 6px; display: block; color: #fff; }
 
   .btn-wa {
     display: inline-block; margin-top: 35px; background-color: transparent; color: #fff;
@@ -48,42 +94,68 @@
   }
   .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
-  .explore-btn { display: block; font-size: 9px; color: #333; margin-top: 40px; letter-spacing: 8px; cursor: pointer; transition: 0.3s; }
-  .explore-btn:hover { color: #fff; }
+  .explore-btn { 
+    display: block; font-size: 9px; color: #333; margin-top: 40px; 
+    letter-spacing: 8px; cursor: pointer; transition: 0.3s; 
+    text-transform: uppercase;
+  }
+  .explore-btn:hover { color: #ff0000; }
 
-  /* 4. HALAMAN 2: GRID DETAIL */
-  #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; max-width: 900px; margin: 0 auto; }
-  .btn-back { display: none; background: none; border: none; color: #444; padding: 20px; cursor: pointer; margin: 15px 0; font-size: 10px; letter-spacing: 5px; }
-  .product-card { background: #050505; border: 1px solid #111; padding: 5px; cursor: pointer; }
-  .product-card img { width: 100%; display: block; transition: 0.3s; }
-  .product-card:hover img { opacity: 0.7; }
+  /* 5. HALAMAN DETAIL (Grid 4 Gambar) */
+  #detail-grid { 
+    display: none; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; padding: 20px; 
+    max-width: 1000px; margin: 0 auto; 
+  }
+  .btn-back { 
+    display: none; background: none; border: none; color: #444; 
+    padding: 25px; cursor: pointer; font-size: 10px; 
+    letter-spacing: 5px; text-transform: uppercase;
+  }
+  .btn-back:hover { color: #fff; }
 
-  /* 5. POPUP VIEWER ZOOM */
-  #viewer {
-    display: none; position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%; background: rgba(0,0,0,0.98);
-    z-index: 10000; overflow: hidden;
+  .product-card { 
+    background: #080808; border: 1px solid #151515; 
+    padding: 5px; cursor: pointer; transition: 0.3s; 
+  }
+  .product-card:hover { border-color: #ff0000; }
+  .product-card img { width: 100%; display: block; }
+
+  /* 6. POPUP VIEWER (Full Zoom) */
+  #viewer { 
+    display: none; position: fixed; top: 0; left: 0; 
+    width: 100%; height: 100%; background: rgba(0,0,0,0.98); 
+    z-index: 10000; 
   }
   .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-  #imgView { max-width: 85%; max-height: 85vh; transition: transform 0.1s; cursor: grab; }
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.5; }
+  #imgView { max-width: 85%; max-height: 80vh; transition: transform 0.2s; border: 1px solid #222; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.6; }
   .ui-btn:hover { opacity: 1; }
   .close-x { top: 10px; right: 10px; }
-  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
-  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
 
-  @media (max-width: 500px) { #detail-grid { grid-template-columns: 1fr; } }
+  /* Responsive Mobile */
+  @media (max-width: 600px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<div class="logo-header">
-  <img src="logo_antisia.png" alt="Antisia Logo">
+<!-- HEADER MARQUEE -->
+<div class="marquee-container">
+  <div class="marquee-text">
+    STREETWEAR WITHOUT APOLOGY — LIMITED RUN — WORLDWIDE SHIPPING — ANTISIA SUPPLY CO. — STREETWEAR WITHOUT APOLOGY — LIMITED RUN — WORLDWIDE SHIPPING
+  </div>
 </div>
 
-<!-- HALAMAN 1 -->
+<!-- LOGO SECTION -->
+<div class="logo-header">
+  <img src="logo_antisia.png" alt="Antisia Logo">
+  <div class="brand-motto">Alternative Gear for the Underground</div>
+</div>
+
+<!-- LANDING PAGE -->
 <div id="main-landing">
-  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
+  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()" title="Click for Details">
   <div class="price-tag">
     <span class="price-idr">IDR 165.000</span>
   </div>
@@ -91,32 +163,30 @@
   <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
-<!-- HALAMAN 2 -->
-<button class="btn-back" id="btnBack" onclick="goBack()">RETURN TO CATALOG</button>
+<!-- DETAIL PAGE (HIDDEN BY DEFAULT) -->
+<button class="btn-back" id="btnBack" onclick="goBack()">← BACK TO CATALOG</button>
+
 <div id="detail-grid">
-  <!-- Setiap gambar sekarang punya fungsi openViewer kawan! -->
+  <!-- Setiap gambar bisa diklik untuk dizoom kawan! -->
   <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
   <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
   <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"></div>
   <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
 </div>
 
-<!-- POPUP VIEWER -->
+<!-- FULL IMAGE VIEWER -->
 <div id="viewer">
   <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
-  <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
-  <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
-  <div class="viewer-wrap" id="dropzone">
+  <div class="viewer-wrap">
     <img id="imgView" src="">
   </div>
 </div>
 
 <script>
-  // DAFTAR GAMBAR
+  // Array gambar untuk viewer
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
-  let currentIndex = 0;
-  let scale = 1;
 
+  // Fungsi navigasi halaman
   function goToDetails() {
     document.getElementById('main-landing').style.display = 'none';
     document.getElementById('detail-grid').style.display = 'grid';
@@ -130,14 +200,11 @@
     document.getElementById('btnBack').style.display = 'none';
   }
 
-  // FUNGSI ZOOM VIEWER
+  // Fungsi Zoom Viewer
   function openViewer(index) {
-    currentIndex = index;
-    scale = 1;
-    document.getElementById("imgView").src = imgs[currentIndex];
+    document.getElementById("imgView").src = imgs[index];
     document.getElementById("viewer").style.display = "block";
-    document.body.style.overflow = "hidden"; // matikan scroll utama
-    updateTransform();
+    document.body.style.overflow = "hidden"; // Mencegah scroll background
   }
 
   function closeViewer() {
@@ -145,27 +212,12 @@
     document.body.style.overflow = "auto";
   }
 
-  function nextImg() { currentIndex = (currentIndex + 1) % imgs.length; updateContent(); }
-  function prevImg() { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; updateContent(); }
-
-  function updateContent() {
-    scale = 1;
-    document.getElementById("imgView").src = imgs[currentIndex];
-    updateTransform();
-  }
-
-  function updateTransform() {
-    document.getElementById("imgView").style.transform = `scale(${scale})`;
-  }
-
-  // FITUR ZOOM DENGAN MOUSE WHEEL
-  const viewer = document.getElementById("viewer");
-  viewer.onwheel = function(e) {
-    e.preventDefault();
-    if (e.deltaY > 0) scale = Math.max(1, scale - 0.2);
-    else scale = Math.min(4, scale + 0.2);
-    updateTransform();
-  }
+  // Close viewer pakai tombol 'Escape' biar makin pro
+  document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      closeViewer();
+    }
+  });
 </script>
 
 </body>
