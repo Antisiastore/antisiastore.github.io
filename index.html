@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA - OFFICIAL STORE</title>
+<title>ANTISIA - OFFICIAL SUPPLY CO.</title>
 
 <style>
-  /* 1. DASAR */
+  /* 1. DASAR & ATMOSFER (Gaya Industrial) */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #1a1a1a; }
@@ -21,21 +21,20 @@
     overflow-x: hidden;
   }
 
-  /* 2. MARQUEE JUMBO */
+  /* 2. FITUR MARQUEE (Teks Berjalan Merah) */
   .marquee-container {
-    background: #ffffff;
-    color: #000000;
-    padding: 18px 0;
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 5px;
+    background: #ff0000;
+    color: #000;
+    padding: 6px 0;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
     text-transform: uppercase;
     overflow: hidden;
     white-space: nowrap;
     position: fixed;
     top: 0; width: 100%;
-    z-index: 3000;
-    border-bottom: 3px solid #000;
+    z-index: 3000; /* Paling atas */
   }
   .marquee-text {
     display: inline-block;
@@ -44,131 +43,95 @@
   }
   @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-  /* 3. UPDATE: LOGO STICKY DENGAN PENGHAPUS BACKGROUND */
+  /* 3. FIX: LOGO STICKY LEBIH RAMPING & TANPA KOTAK PUTIH */
   .logo-header { 
-    padding: 30px;
-    padding-top: 100px;
-    background: rgba(0,0,0,0.9);
+    /* Jarak dari marquee, padding dipersempit kawan */
+    padding: 20px 20px 5px 20px; 
+    margin-top: 25px; 
+    background: rgba(0,0,0,0.95);
     backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
+    position: sticky; top: 0; 
     z-index: 2000;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .logo-header img { 
-    max-width: 320px; 
-    width: 85%; 
-    height: auto; 
-    display: block; 
-    margin: 0 auto; 
-    /* --- INI SIHIRNYA KAWAN: MENGHAPUS KOTAK PUTIH --- */
+    max-width: 180px; /* Ukuran diperkecil kawan agar muat */
+    width: 50%; height: auto; 
+    display: block; margin: 0 auto;
+    
+    /* --- INI SIHIRNYA KAWAN: MENGHAPUS KOTAK PUTIH PADA LOGO BARUMU --- */
     mix-blend-mode: screen; 
   }
 
-  /* 4. HALAMAN UTAMA */
-  #main-landing { padding: 40px 20px; }
-  
-  .status-tag {
-    font-size: 10px; color: #ff0000; letter-spacing: 2px; margin-bottom: 10px; display: block;
-  }
-  .blink { animation: blinker 1s linear infinite; }
-  @keyframes blinker { 50% { opacity: 0; } }
+  /* 4. HALAMAN UTAMA (Main Landing) */
+  #main-landing { padding: 30px 20px 60px 20px; animation: fadeIn 1.2s forwards; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  .hero-img { max-width: 480px; width: 95%; border: 1px solid #222; cursor: pointer; transition: 0.4s; }
-  .hero-img:hover { border-color: #ff0000; box-shadow: 0 0 30px rgba(255,0,0,0.2); }
-  
-  .price-tag { margin-top: 30px; }
-  .price-idr { font-size: 30px; font-weight: 900; letter-spacing: 8px; display: block; }
-
-  .tech-specs {
-    max-width: 400px; margin: 25px auto; padding: 15px;
-    border: 1px dashed #333; font-size: 11px; color: #666;
-    text-align: left; line-height: 1.8;
+  .hero-img { 
+    max-width: 420px; width: 95%; 
+    border: 1px solid #222; 
+    cursor: pointer; 
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
   }
+  .hero-img:hover { border-color: #ff0000; box-shadow: 0 0 30px rgba(255,0,0,0.2); transform: translateY(-8px); }
+
+  .price-tag { margin-top: 20px; }
+  .price-idr { font-size: 24px; font-weight: 900; letter-spacing: 5px; display: block; }
 
   .btn-wa {
-    display: inline-block; margin-top: 10px; background-color: transparent; color: #fff;
-    padding: 18px 55px; text-decoration: none; border: 1px solid #333;
-    font-size: 13px; letter-spacing: 5px; transition: 0.2s; text-transform: uppercase;
+    display: inline-block; margin-top: 30px; background-color: transparent; color: #fff;
+    padding: 12px 40px; text-decoration: none; border: 1px solid #333;
+    font-size: 11px; letter-spacing: 4px; transition: 0.4s; text-transform: uppercase;
   }
-  .btn-wa:hover { 
-    background: #fff; color: #000; 
-    animation: glitch 0.2s infinite;
-  }
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-  }
+  .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
-  .explore-btn {
-    display: block; font-size: 11px; color: #444; margin-top: 45px;
-    letter-spacing: 10px; cursor: pointer; transition: 0.3s;
-    text-transform: uppercase;
+  .explore-btn { 
+    display: block; font-size: 9px; color: #333; margin-top: 35px; 
+    letter-spacing: 7px; cursor: pointer; transition: 0.3s; text-transform: uppercase;
   }
   .explore-btn:hover { color: #fff; }
 
-  /* 5. DETAIL GRID */
-  #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-  .btn-back { display: none; background: none; border: none; color: #555; padding: 30px; cursor: pointer; font-size: 11px; letter-spacing: 6px; }
+  /* 5. HALAMAN DETAIL (Grid 4 Gambar) */
+  #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 15px; max-width: 900px; margin: 0 auto; }
+  .btn-back { display: none; background: none; border: none; color: #444; padding: 20px; cursor: pointer; font-size: 10px; letter-spacing: 5px; text-transform: uppercase;}
+  .btn-back:hover { color: #fff; }
 
-  .product-card { background: #080808; border: 1px solid #151515; padding: 5px; cursor: pointer; }
+  .product-card { background: #080808; border: 1px solid #151515; padding: 5px; cursor: pointer; transition: 0.3s;}
+  .product-card:hover { border-color: #ff0000; }
   .product-card img { width: 100%; display: block; }
 
-  /* 6. VIEWER ZOOM & DRAG */
-  #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; overflow: hidden; }
-  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
-  #imgView { 
-    max-width: 85%; max-height: 85vh; 
-    cursor: grab; user-select: none; position: absolute;
-    transition: transform 0.1s ease-out;
-  }
-  #imgView:active { cursor: grabbing; }
-  
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 40px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.5; }
-  .ui-btn:hover { opacity: 1; color: #ff0000; }
+  /* 6. POPUP VIEWER (Full Zoom) */
+  #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; }
+  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+  #imgView { max-width: 85%; max-height: 80vh; transition: transform 0.2s; border: 1px solid #222; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.6; }
+  .ui-btn:hover { opacity: 1; }
   .close-x { top: 10px; right: 10px; }
-  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
-  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
 
+  /* Responsive Mobile */
   @media (max-width: 600px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
 <div class="marquee-container">
-  <div class="marquee-text">
-    STREETWEAR WITHOUT APOLOGY — LIMITED RUN — WORLDWIDE SHIPPING — ANTISIA SUPPLY CO. — STREETWEAR WITHOUT APOLOGY
-  </div>
+  <div class="marquee-text">STREETWEAR WITHOUT APOLOGY — LIMITED RUN — WORLDWIDE SHIPPING — ANTISIA SUPPLY CO.</div>
 </div>
 
 <div class="logo-header">
-  
-<img src="logo_antisia.png" alt="Antisia Logo">
+  <img src="logo_antisia.png" alt="Antisia Logo">
 </div>
 
 <div id="main-landing">
-  <span class="status-tag"><span class="blink">●</span> STATUS: LIMITED EDITION RILIS</span>
-  
-  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
-  
-  <div class="price-tag"><span class="price-idr">IDR 165.000</span></div>
-
-  <div class="tech-specs">
-    [MATERIAL] : Cotton Combed 24s Heavyweight<br>
-    [PRINTING] : High-Quality Plastisol Ink<br>
-    [FITTING]  : Oversized Urban Fit<br>
-    [ORIGIN]   : Bandung, West Java / ID
+  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()" title="Click for Details">
+  <div class="price-tag">
+    <span class="price-idr">IDR 165.000</span>
   </div>
-
-  <a href="https://wa.me/6282137358827" class="btn-wa" target="_blank">CHECK OUT</a>
-  
+  <a href="https://wa.me/6282137358827?text=Saya%20mau%20beli%20merchandise%20Antisia" class="btn-wa" target="_blank">CHECK OUT</a>
   <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
-<button class="btn-back" id="btnBack" onclick="goBack()">← RETURN TO CATALOG</button>
+<button class="btn-back" id="btnBack" onclick="goBack()">← BACK TO CATALOG</button>
 
 <div id="detail-grid">
   <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
@@ -179,21 +142,16 @@
 
 <div id="viewer">
   <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
-  <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
-  <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
-  <div class="viewer-wrap" id="dragContainer">
+  <div class="viewer-wrap">
     <img id="imgView" src="">
   </div>
 </div>
 
 <script>
-  // ... semua script JavaScript tetap sama seperti sebelumnya ...
+  // Array gambar untuk viewer
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
-  let currentIndex = 0;
-  let scale = 1;
-  let isDragging = false;
-  let startX, startY, translateX = 0, translateY = 0;
 
+  // Fungsi navigasi halaman
   function goToDetails() {
     document.getElementById('main-landing').style.display = 'none';
     document.getElementById('detail-grid').style.display = 'grid';
@@ -207,12 +165,11 @@
     document.getElementById('btnBack').style.display = 'none';
   }
 
+  // Fungsi Zoom Viewer
   function openViewer(index) {
-    currentIndex = index;
-    resetZoom();
-    updateViewer();
+    document.getElementById("imgView").src = imgs[index];
     document.getElementById("viewer").style.display = "block";
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden"; // Mencegah scroll background
   }
 
   function closeViewer() {
@@ -220,50 +177,10 @@
     document.body.style.overflow = "auto";
   }
 
-  function nextImg() { currentIndex = (currentIndex + 1) % imgs.length; resetZoom(); updateViewer(); }
-  function prevImg() { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; resetZoom(); updateViewer(); }
-
-  function resetZoom() {
-    scale = 1; translateX = 0; translateY = 0;
-  }
-
-  function updateViewer() {
-    const img = document.getElementById("imgView");
-    img.src = imgs[currentIndex];
-    img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-  }
-
-  const viewer = document.getElementById("viewer");
-  viewer.onwheel = function(e) {
-    e.preventDefault();
-    if (e.deltaY > 0) scale = Math.max(1, scale - 0.2);
-    else scale = Math.min(5, scale + 0.2);
-    if (scale === 1) resetZoom();
-    updateViewer();
-  }
-
-  viewer.onmousedown = (e) => {
-    if (scale > 1) {
-      isDragging = true;
-      startX = e.clientX - translateX;
-      startY = e.clientY - translateY;
-    }
-  };
-
-  window.onmousemove = (e) => {
-    if (!isDragging) return;
-    translateX = e.clientX - startX;
-    translateY = e.clientY - startY;
-    updateViewer();
-  };
-
-  window.onmouseup = () => { isDragging = false; };
-
-  document.addEventListener('keydown', (e) => {
-    if (document.getElementById("viewer").style.display === "block") {
-      if (e.key === "ArrowRight") nextImg();
-      if (e.key === "ArrowLeft") prevImg();
-      if (e.key === "Escape") closeViewer();
+  // Close viewer pakai tombol 'Escape' biar makin pro
+  document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      closeViewer();
     }
   });
 </script>
