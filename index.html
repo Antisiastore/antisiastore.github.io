@@ -6,7 +6,7 @@
 <title>ANTISIA - ALTERNATIVE GEAR SUPPLY</title>
 
 <style>
-  /* 1. DASAR & ATMOSFER (Vibe Industrial) */
+  /* 1. DASAR & ATMOSFER */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #1a1a1a; }
@@ -21,87 +21,88 @@
     overflow-x: hidden;
   }
 
-  /* 2. FITUR MARQUEE (Teks Berjalan Merah) */
+  /* 2. UPDATE: MARQUEE PUTIH (Teks Lebih Besar & Hitam) */
   .marquee-container {
-    background: #ff0000;
-    color: #000;
-    padding: 6px 0;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 2px;
+    background: #ffffff; /* Ganti jadi putih */
+    color: #000000;      /* Teks jadi hitam */
+    padding: 10px 0;     /* Padding diperbesar */
+    font-size: 16px;     /* Ukuran font diperbesar */
+    font-weight: 900;    /* Lebih tebal */
+    letter-spacing: 3px;
     text-transform: uppercase;
     overflow: hidden;
     white-space: nowrap;
     position: fixed;
     top: 0; width: 100%;
     z-index: 2000;
+    border-bottom: 2px solid #000;
   }
   .marquee-text {
     display: inline-block;
     padding-left: 100%;
-    animation: marquee 20s linear infinite;
+    animation: marquee 25s linear infinite;
   }
   @keyframes marquee {
     0% { transform: translate(0, 0); }
     100% { transform: translate(-100%, 0); }
   }
 
-  /* 3. HEADER & LOGO */
+  /* 3. UPDATE: LOGO STATIC (Tidak Ikut Scroll) */
   .logo-header { 
-    padding: 70px 20px 20px 20px; /* Jarak aman dari marquee */
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
+    padding: 80px 20px 30px 20px; /* Jarak dari marquee putih */
+    background: transparent;      /* Dibuat transparan agar menyatu dengan body */
+    position: relative;           /* Tidak lagi sticky */
   }
   .logo-header img { 
-    max-width: 240px; 
-    width: 60%; 
+    max-width: 260px; 
+    width: 65%; 
     height: auto; 
     display: block; 
     margin: 0 auto; 
   }
 
   .brand-motto {
-    font-size: 10px;
-    color: #555;
-    letter-spacing: 4px;
+    font-size: 11px;
+    color: #444;
+    letter-spacing: 5px;
     margin-top: 15px;
     text-transform: uppercase;
   }
 
-  /* 4. HALAMAN UTAMA (Landing) */
-  #main-landing { padding: 40px 20px; animation: fadeIn 1.2s forwards; }
+  /* 4. HALAMAN UTAMA */
+  #main-landing { padding: 30px 20px 60px 20px; animation: fadeIn 1.2s forwards; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
   .hero-img { 
-    max-width: 450px; width: 90%; 
+    max-width: 450px; width: 95%; 
     border: 1px solid #222; 
     cursor: pointer; 
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
   }
   .hero-img:hover { 
     border-color: #ff0000; 
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
-    transform: translateY(-8px);
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
+    transform: translateY(-5px);
   }
 
   .price-tag { margin-top: 30px; }
-  .price-idr { font-size: 26px; font-weight: 900; letter-spacing: 6px; display: block; color: #fff; }
+  .price-idr { font-size: 28px; font-weight: 900; letter-spacing: 7px; display: block; }
 
   .btn-wa {
     display: inline-block; margin-top: 35px; background-color: transparent; color: #fff;
-    padding: 15px 45px; text-decoration: none; border: 1px solid #333;
-    font-size: 11px; letter-spacing: 5px; transition: 0.4s; text-transform: uppercase;
+    padding: 16px 50px; text-decoration: none; border: 1px solid #333;
+    font-size: 12px; letter-spacing: 5px; transition: 0.4s; text-transform: uppercase;
   }
   .btn-wa:hover { background: #fff; color: #000; border-color: #fff; }
 
   .explore-btn { 
-    display: block; font-size: 9px; color: #333; margin-top: 40px; 
-    letter-spacing: 8px; cursor: pointer; transition: 0.3s; 
+    display: block; font-size: 10px; color: #333; margin-top: 45px; 
+    letter-spacing: 10px; cursor: pointer; transition: 0.3s; 
     text-transform: uppercase;
   }
-  .explore-btn:hover { color: #ff0000; }
+  .explore-btn:hover { color: #fff; }
 
-  /* 5. HALAMAN DETAIL (Grid 4 Gambar) */
+  /* 5. DETAIL GRID */
   #detail-grid { 
     display: none; 
     grid-template-columns: repeat(2, 1fr); 
@@ -109,9 +110,9 @@
     max-width: 1000px; margin: 0 auto; 
   }
   .btn-back { 
-    display: none; background: none; border: none; color: #444; 
-    padding: 25px; cursor: pointer; font-size: 10px; 
-    letter-spacing: 5px; text-transform: uppercase;
+    display: none; background: none; border: none; color: #555; 
+    padding: 30px; cursor: pointer; font-size: 11px; 
+    letter-spacing: 6px; text-transform: uppercase;
   }
   .btn-back:hover { color: #fff; }
 
@@ -122,40 +123,33 @@
   .product-card:hover { border-color: #ff0000; }
   .product-card img { width: 100%; display: block; }
 
-  /* 6. POPUP VIEWER (Full Zoom) */
-  #viewer { 
-    display: none; position: fixed; top: 0; left: 0; 
-    width: 100%; height: 100%; background: rgba(0,0,0,0.98); 
-    z-index: 10000; 
-  }
+  /* 6. VIEWER */
+  #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; }
   .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-  #imgView { max-width: 85%; max-height: 80vh; transition: transform 0.2s; border: 1px solid #222; }
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.6; }
-  .ui-btn:hover { opacity: 1; }
+  #imgView { max-width: 90%; max-height: 85vh; border: 1px solid #222; }
+  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10001; padding: 20px; }
   .close-x { top: 10px; right: 10px; }
 
-  /* Responsive Mobile */
   @media (max-width: 600px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<!-- HEADER MARQUEE -->
+<!-- MARQUEE PUTIH (FIXED) -->
 <div class="marquee-container">
   <div class="marquee-text">
     STREETWEAR WITHOUT APOLOGY — LIMITED RUN — WORLDWIDE SHIPPING — ANTISIA SUPPLY CO. — STREETWEAR WITHOUT APOLOGY — LIMITED RUN — WORLDWIDE SHIPPING
   </div>
 </div>
 
-<!-- LOGO SECTION -->
+<!-- LOGO SECTION (STATIC) -->
 <div class="logo-header">
   <img src="logo_antisia.png" alt="Antisia Logo">
   <div class="brand-motto">Alternative Gear for the Underground</div>
 </div>
 
-<!-- LANDING PAGE -->
 <div id="main-landing">
-  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()" title="Click for Details">
+  <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
   <div class="price-tag">
     <span class="price-idr">IDR 165.000</span>
   </div>
@@ -163,18 +157,15 @@
   <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
 </div>
 
-<!-- DETAIL PAGE (HIDDEN BY DEFAULT) -->
-<button class="btn-back" id="btnBack" onclick="goBack()">← BACK TO CATALOG</button>
+<button class="btn-back" id="btnBack" onclick="goBack()">← RETURN TO CATALOG</button>
 
 <div id="detail-grid">
-  <!-- Setiap gambar bisa diklik untuk dizoom kawan! -->
   <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
   <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
   <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"></div>
   <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
 </div>
 
-<!-- FULL IMAGE VIEWER -->
 <div id="viewer">
   <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
   <div class="viewer-wrap">
@@ -183,10 +174,8 @@
 </div>
 
 <script>
-  // Array gambar untuk viewer
   const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
 
-  // Fungsi navigasi halaman
   function goToDetails() {
     document.getElementById('main-landing').style.display = 'none';
     document.getElementById('detail-grid').style.display = 'grid';
@@ -200,24 +189,16 @@
     document.getElementById('btnBack').style.display = 'none';
   }
 
-  // Fungsi Zoom Viewer
   function openViewer(index) {
     document.getElementById("imgView").src = imgs[index];
     document.getElementById("viewer").style.display = "block";
-    document.body.style.overflow = "hidden"; // Mencegah scroll background
+    document.body.style.overflow = "hidden";
   }
 
   function closeViewer() {
     document.getElementById("viewer").style.display = "none";
     document.body.style.overflow = "auto";
   }
-
-  // Close viewer pakai tombol 'Escape' biar makin pro
-  document.addEventListener('keydown', function(event) {
-    if (event.key === "Escape") {
-      closeViewer();
-    }
-  });
 </script>
 
 </body>
