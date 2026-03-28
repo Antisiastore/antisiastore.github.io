@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANTISIA - VAULT V.14</title>
+    <title>ANTISIA - VAULT V.15</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
+        /* PAKSA BACKGROUND HITAM SEJAK AWAL AGAR TIDAK PUTIH DI GITHUB */
+        html, body { 
+            background-color: #000000 !important; 
+            margin: 0; 
+            padding: 0; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            overflow: hidden; 
+            width: 100%;
+            height: 100%;
+        }
 
-        /* --- 1. EFEK GETAR CYBER (HIGH FREQUENCY GLITCH) --- */
+        /* --- EFEK GETAR CYBER --- */
         @keyframes glitchVibration {
             0% { transform: translate(0); text-shadow: none; }
             20% { transform: translate(-2px, 2px); text-shadow: 2px 0 red, -2px 0 cyan; }
@@ -19,12 +28,49 @@
         }
 
         .cyber-shake:hover {
-            animation: glitchVibration 0.15s linear infinite; /* Sangat cepat & brutal kawan! */
+            animation: glitchVibration 0.15s linear infinite;
             filter: brightness(1.3);
             cursor: pointer;
         }
 
-        /* --- 2. HOLDER BERJALAN --- */
+        /* --- GATE SCREEN (HALAMAN DEPAN) --- */
+        #gate-screen {
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100vh;
+            background: #000; /* Hitam pekat */
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999;
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+
+        /* LOGO DEPAN - Pastikan Nama File Sesuai */
+        .gate-logo { 
+            max-width: 320px; 
+            width: 80%; 
+            margin-bottom: 50px; 
+            display: block;
+            mix-blend-mode: screen; 
+            transition: 0.3s;
+        }
+
+        .menu-item { 
+            font-size: 28px; 
+            font-weight: 900; 
+            letter-spacing: 12px; 
+            color: #333; 
+            margin: 15px 0; 
+            transition: 0.4s; 
+            text-align: center;
+        }
+        .menu-item:hover { color: #fff; letter-spacing: 18px; }
+
+        /* --- VAULT CONTENT --- */
+        #main-vault { display: none; background: #000; width: 100%; height: 100vh; overflow-y: auto; }
+
         .marquee-holder {
             position: fixed; top: 0; left: 0; width: 100%; 
             background: #fff; color: #000; height: 40px;
@@ -32,61 +78,45 @@
             overflow: hidden; z-index: 9500;
         }
         .marquee-content { display: flex; white-space: nowrap; animation: jalanTerus 25s linear infinite; }
-        .marquee-text { font-size: 14px; font-weight: 900; letter-spacing: 5px; padding-right: 50px; text-transform: uppercase; }
+        .marquee-text { font-size: 14px; font-weight: 900; letter-spacing: 5px; padding-right: 50px; }
         @keyframes jalanTerus { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- 3. NAV SHIELD (ANTI-BOCOR) --- */
         #fixed-nav-shield {
             display: none; position: fixed; top: 40px; left: 0; width: 100%; height: 140px;
             background: #000; z-index: 7000; text-align: center; padding-top: 15px;
         }
-        .sticky-logo { width: 100px; mix-blend-mode: screen; opacity: 0.5; margin-bottom: 5px; transition: 0.2s; }
+        .sticky-logo { width: 100px; mix-blend-mode: screen; opacity: 0.6; margin-bottom: 5px; }
         
-        .nav-controls { pointer-events: auto; }
         .btn-ui {
             display: inline-block; padding: 6px 15px; border: 1px solid #333; 
             color: #555; font-size: 10px; cursor: pointer; letter-spacing: 2px;
-            background: rgba(0,0,0,0.95); text-transform: uppercase;
+            text-transform: uppercase;
         }
 
+        .content-scroll { padding-top: 190px; padding-bottom: 100px; text-align: center; }
+        .hero-img { width: 90%; max-width: 420px; border: 1px solid #111; cursor: pointer; }
+        
         .btn-explore {
             display: block; width: fit-content; margin: 20px auto;
             padding: 10px 30px; border: 1px solid #444; color: #888;
             font-size: 12px; letter-spacing: 5px; cursor: pointer;
-            background: #000; text-transform: uppercase; transition: 0.3s;
+            text-transform: uppercase;
         }
         .btn-explore:hover { border-color: #fff; color: #fff; }
 
-        /* --- 4. LAYOUT --- */
-        #gate-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #000; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 8500;
-            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
-        }
-        .gate-logo { max-width: 320px; width: 85%; margin-bottom: 50px; mix-blend-mode: screen; opacity: 0.9; }
-        .menu-item { font-size: 28px; font-weight: 900; letter-spacing: 12px; color: #222; margin: 15px 0; transition: 0.4s; }
-        .menu-item:hover { color: #fff; letter-spacing: 18px; }
-
-        #main-vault { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow-y: auto; z-index: 1000; }
-
-        .content-scroll { padding-top: 190px; padding-bottom: 100px; text-align: center; position: relative; z-index: 2000; }
-        .hero-img { width: 90%; max-width: 420px; border: 1px solid #111; cursor: pointer; transition: 0.5s; }
-        
         .price { font-size: 26px; font-weight: 900; margin: 10px 0; letter-spacing: 6px; }
-        .btn-order { display: inline-block; padding: 15px 45px; border: 1px solid #fff; color: #fff; text-decoration: none; font-size: 12px; letter-spacing: 4px; transition: 0.3s; }
+        .btn-order { display: inline-block; padding: 15px 45px; border: 1px solid #fff; color: #fff; text-decoration: none; font-size: 12px; letter-spacing: 4px; }
         .btn-order:hover { background: #fff; color: #000; }
 
         #detail-view { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-        .detail-card img { width: 100%; border: 1px solid #111; cursor: pointer; }
+        .detail-card img { width: 100%; border: 1px solid #111; }
 
-        /* --- 5. VIEWER --- */
+        /* VIEWER */
         #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10001; }
-        .viewer-container { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; }
-        #imgView { max-width: 85%; max-height: 85vh; cursor: grab; transition: transform 0.1s ease-out; }
+        .viewer-container { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        #imgView { max-width: 85%; max-height: 85vh; cursor: grab; }
 
-        .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10002; opacity: 0.4; padding: 20px; }
-        .ui-btn:hover { opacity: 1; color: #ff0000; }
+        .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10002; padding: 20px; opacity: 0.5;}
         .close-x { top: 10px; right: 10px; }
         .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
         .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
@@ -99,29 +129,32 @@
 </head>
 <body>
 
-    <!-- HALAMAN GERBANG -->
+    <!-- GATE SCREEN -->
     <div id="gate-screen">
-        <img src="logo_antisia.png" class="gate-logo cyber-shake" onclick="openVault()">
+        <!-- PASTIKAN NAMA FILE DI BAWAH INI SAMA DENGAN DI FOLDER GITHUB -->
+        <img src="logo_antisia.png" id="logo-utama" class="gate-logo cyber-shake" onclick="openVault()" alt="LOGO ANTISIA">
+        
         <div class="menu-item cyber-shake" onclick="openVault()">T-SHIRT</div>
         <div class="menu-item" style="opacity: 0.1;">SWEATER</div>
+        
         <div class="sys-stats">COORD: 6.9175° S, 107.6191° E</div>
         <div class="sys-clock" id="clock-display">00:00:00</div>
     </div>
 
-    <!-- SISTEM UTAMA -->
+    <!-- MAIN VAULT -->
     <div id="main-vault">
         <div class="marquee-holder">
             <div class="marquee-content">
-                <span class="marquee-text">ANTISIA INDUSTRIAL STREETWEAR - ACCESS GRANTED - BANDUNG 2026 - VAULT SYSTEM - </span>
-                <span class="marquee-text">ANTISIA INDUSTRIAL STREETWEAR - ACCESS GRANTED - BANDUNG 2026 - VAULT SYSTEM - </span>
+                <span class="marquee-text">ANTISIA INDUSTRIAL STREETWEAR - ACCESS GRANTED - BANDUNG 2026 - </span>
+                <span class="marquee-text">ANTISIA INDUSTRIAL STREETWEAR - ACCESS GRANTED - BANDUNG 2026 - </span>
             </div>
         </div>
 
         <div id="fixed-nav-shield">
             <img src="logo_antisia.png" class="sticky-logo cyber-shake" onclick="location.reload()">
             <div class="nav-controls">
-                <div class="btn-ui cyber-shake" id="btn-return" onclick="closeVault()">[ RETURN TO MENU ]</div>
-                <div class="btn-ui cyber-shake" id="btn-back" onclick="hideGrid()" style="display:none;">[ BACK TO CATALOG ]</div>
+                <div class="btn-ui cyber-shake" id="btn-return" onclick="closeVault()">[ RETURN ]</div>
+                <div class="btn-ui cyber-shake" id="btn-back" onclick="hideGrid()" style="display:none;">[ CATALOG ]</div>
             </div>
         </div>
 
@@ -130,7 +163,7 @@
                 <img src="kaos_depan.jpg" class="hero-img" onclick="showGrid()">
                 <div class="btn-explore cyber-shake" onclick="showGrid()">[ EXPLORE DETAIL ]</div>
                 <div class="price">IDR 165.000</div>
-                <a href="https://wa.me/6282137358827" class="btn-order cyber-shake">GET ACCESS (WA)</a>
+                <a href="https://wa.me/6282137358827" target="_blank" class="btn-order cyber-shake">GET ACCESS (WA)</a>
             </div>
 
             <div id="detail-view">
@@ -142,7 +175,7 @@
         </div>
     </div>
 
-    <!-- POWER VIEWER -->
+    <!-- VIEWER -->
     <div id="viewer">
         <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
         <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
@@ -152,7 +185,7 @@
 
     <script>
         const detailImgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
-        let currentIndex = 0, scale = 1, isDragging = false, startX, startY, translateX = 0, translateY = 0;
+        let currentIndex = 0;
 
         function startClock() {
             const now = new Date();
@@ -190,20 +223,13 @@
             document.getElementById('btn-back').style.display = 'none';
         }
 
-        // VIEWER LOGIC
+        // VIEWER
         const viewer = document.getElementById("viewer");
         const imgView = document.getElementById("imgView");
-        function openViewer(i) { currentIndex = i; resetZoom(); updateViewerContent(); viewer.style.display = "block"; }
+        function openViewer(i) { currentIndex = i; imgView.src = detailImgs[currentIndex]; viewer.style.display = "block"; }
         function closeViewer() { viewer.style.display = "none"; }
-        function updateViewerContent() { imgView.src = detailImgs[currentIndex]; imgView.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`; }
-        function nextImg() { currentIndex = (currentIndex + 1) % detailImgs.length; resetZoom(); updateViewerContent(); }
-        function prevImg() { currentIndex = (currentIndex - 1 + detailImgs.length) % detailImgs.length; resetZoom(); updateViewerContent(); }
-        function resetZoom() { scale = 1; translateX = 0; translateY = 0; }
-
-        viewer.onwheel = function(e) { e.preventDefault(); scale = e.deltaY > 0 ? Math.max(1, scale - 0.3) : Math.min(5, scale + 0.3); if (scale <= 1) resetZoom(); updateViewerContent(); }
-        viewer.onmousedown = function(e) { if (scale > 1) { isDragging = true; startX = e.clientX - translateX; startY = e.clientY - translateY; } };
-        window.onmousemove = function(e) { if (!isDragging) return; translateX = e.clientX - startX; translateY = e.clientY - startY; updateViewerContent(); };
-        window.onmouseup = function() { isDragging = false; };
+        function nextImg() { currentIndex = (currentIndex + 1) % detailImgs.length; imgView.src = detailImgs[currentIndex]; }
+        function prevImg() { currentIndex = (currentIndex - 1 + detailImgs.length) % detailImgs.length; imgView.src = detailImgs[currentIndex]; }
     </script>
 </body>
 </html>
