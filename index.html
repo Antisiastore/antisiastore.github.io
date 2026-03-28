@@ -1,117 +1,209 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANTISIA - OFFICIAL STORE</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTISIA - VAULT V.14</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; overflow: hidden; }
 
-<style>
-  /* 1. DASAR */
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #000; }
-  ::-webkit-scrollbar-thumb { background: #1a1a1a; }
-  
-  body {
-    margin: 0; padding: 0;
-    background: radial-gradient(circle, #111 0%, #000 100%);
-    background-attachment: fixed;
-    color: #fff;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-    overflow-x: hidden;
-  }
+        /* --- 1. EFEK GETAR CYBER (HIGH FREQUENCY GLITCH) --- */
+        @keyframes glitchVibration {
+            0% { transform: translate(0); text-shadow: none; }
+            20% { transform: translate(-2px, 2px); text-shadow: 2px 0 red, -2px 0 cyan; }
+            40% { transform: translate(-2px, -2px); text-shadow: -2px 0 red, 2px 0 cyan; }
+            60% { transform: translate(2px, 2px); text-shadow: 1px 0 yellow, -1px 0 magenta; }
+            80% { transform: translate(2px, -2px); text-shadow: -1px 0 yellow, 1px 0 magenta; }
+            100% { transform: translate(0); }
+        }
 
-  /* 2. MARQUEE JUMBO */
-  .marquee-container {
-    background: #ffffff; color: #000; padding: 18px 0;
-    font-size: 22px; font-weight: 900; letter-spacing: 5px;
-    text-transform: uppercase; overflow: hidden; white-space: nowrap;
-    position: fixed; top: 0; width: 100%; z-index: 3000; border-bottom: 3px solid #000;
-  }
-  .marquee-text {
-    display: inline-block; padding-left: 100%;
-    animation: marquee 20s linear infinite;
-  }
-  @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        .cyber-shake:hover {
+            animation: glitchVibration 0.15s linear infinite; /* Sangat cepat & brutal kawan! */
+            filter: brightness(1.3);
+            cursor: pointer;
+        }
 
-  /* 3. LOGO STICKY (TANPA KOTAK PUTIH) */
-  .logo-header { 
-    padding: 15px; padding-top: 80px; 
-    background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
-    position: sticky; top: 0; z-index: 2000;
-  }
-  .logo-header img { 
-    max-width: 250px; width: 70%; height: auto; display: block; margin: 0 auto; 
-    mix-blend-mode: screen; 
-  }
+        /* --- 2. HOLDER BERJALAN --- */
+        .marquee-holder {
+            position: fixed; top: 0; left: 0; width: 100%; 
+            background: #fff; color: #000; height: 40px;
+            display: flex; align-items: center;
+            overflow: hidden; z-index: 9500;
+        }
+        .marquee-content { display: flex; white-space: nowrap; animation: jalanTerus 25s linear infinite; }
+        .marquee-text { font-size: 14px; font-weight: 900; letter-spacing: 5px; padding-right: 50px; text-transform: uppercase; }
+        @keyframes jalanTerus { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  /* 4. HALAMAN UTAMA */
-  #main-landing { padding: 40px 20px 100px 20px; }
-  .status-tag { font-size: 10px; color: #ff0000; letter-spacing: 2px; margin-bottom: 15px; display: block; }
-  .blink { animation: blinker 1s linear infinite; }
-  @keyframes blinker { 50% { opacity: 0; } }
+        /* --- 3. NAV SHIELD (ANTI-BOCOR) --- */
+        #fixed-nav-shield {
+            display: none; position: fixed; top: 40px; left: 0; width: 100%; height: 140px;
+            background: #000; z-index: 7000; text-align: center; padding-top: 15px;
+        }
+        .sticky-logo { width: 100px; mix-blend-mode: screen; opacity: 0.5; margin-bottom: 5px; transition: 0.2s; }
+        
+        .nav-controls { pointer-events: auto; }
+        .btn-ui {
+            display: inline-block; padding: 6px 15px; border: 1px solid #333; 
+            color: #555; font-size: 10px; cursor: pointer; letter-spacing: 2px;
+            background: rgba(0,0,0,0.95); text-transform: uppercase;
+        }
 
-  .hero-img { max-width: 480px; width: 95%; border: 1px solid #222; cursor: pointer; transition: 0.4s; }
-  .hero-img:hover { border-color: #ff0000; box-shadow: 0 0 30px rgba(255,0,0,0.2); }
-  
-  .price-tag { margin-top: 25px; margin-bottom: 25px; }
-  .price-idr { font-size: 30px; font-weight: 900; letter-spacing: 8px; display: block; }
+        .btn-explore {
+            display: block; width: fit-content; margin: 20px auto;
+            padding: 10px 30px; border: 1px solid #444; color: #888;
+            font-size: 12px; letter-spacing: 5px; cursor: pointer;
+            background: #000; text-transform: uppercase; transition: 0.3s;
+        }
+        .btn-explore:hover { border-color: #fff; color: #fff; }
 
-  .tech-specs {
-    max-width: 400px; margin: 25px auto; padding: 15px;
-    border: 1px dashed #333; font-size: 11px; color: #666;
-    text-align: left; line-height: 1.8;
-  }
+        /* --- 4. LAYOUT --- */
+        #gate-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 8500;
+            transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        .gate-logo { max-width: 320px; width: 85%; margin-bottom: 50px; mix-blend-mode: screen; opacity: 0.9; }
+        .menu-item { font-size: 28px; font-weight: 900; letter-spacing: 12px; color: #222; margin: 15px 0; transition: 0.4s; }
+        .menu-item:hover { color: #fff; letter-spacing: 18px; }
 
-  /* TOMBOL CHECK OUT DENGAN EFEK GETAR (GLITCH) */
-  .btn-wa {
-    display: inline-block; margin-top: 20px; background: transparent; color: #fff;
-    padding: 18px 55px; text-decoration: none; border: 1px solid #fff;
-    font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
-  }
-  .btn-wa:hover { 
-    background: #fff; color: #000; 
-    animation: glitch 0.2s infinite; 
-  }
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    25% { transform: translate(-3px, 3px); }
-    50% { transform: translate(-3px, -3px); }
-    75% { transform: translate(3px, 3px); }
-    100% { transform: translate(3px, -3px); }
-  }
+        #main-vault { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow-y: auto; z-index: 1000; }
 
-  .explore-btn {
-    display: block; font-size: 11px; color: #444; margin-top: 50px;
-    letter-spacing: 10px; cursor: pointer; transition: 0.3s; text-transform: uppercase;
-  }
-  .explore-btn:hover { color: #fff; }
+        .content-scroll { padding-top: 190px; padding-bottom: 100px; text-align: center; position: relative; z-index: 2000; }
+        .hero-img { width: 90%; max-width: 420px; border: 1px solid #111; cursor: pointer; transition: 0.5s; }
+        
+        .price { font-size: 26px; font-weight: 900; margin: 10px 0; letter-spacing: 6px; }
+        .btn-order { display: inline-block; padding: 15px 45px; border: 1px solid #fff; color: #fff; text-decoration: none; font-size: 12px; letter-spacing: 4px; transition: 0.3s; }
+        .btn-order:hover { background: #fff; color: #000; }
 
-  /* 5. DETAIL GRID */
-  #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-  .btn-back { display: none; background: none; border: none; color: #555; padding: 30px; cursor: pointer; font-size: 11px; letter-spacing: 6px; width:100%; }
-  .product-card { background: #080808; border: 1px solid #151515; padding: 5px; cursor: pointer; }
-  .product-card img { width: 100%; display: block; }
+        #detail-view { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; max-width: 1000px; margin: 0 auto; }
+        .detail-card img { width: 100%; border: 1px solid #111; cursor: pointer; }
 
-  /* 6. VIEWER ZOOM, DRAG & PANAH */
-  #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; overflow: hidden; }
-  .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
-  #imgView { 
-    max-width: 85%; max-height: 85vh; cursor: grab; user-select: none; position: absolute;
-    transition: transform 0.1s ease-out;
-  }
-  #imgView:active { cursor: grabbing; }
-  
-  .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 40px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.5; transition: 0.3s;}
-  .ui-btn:hover { opacity: 1; color: #ff0000; }
-  .close-x { top: 10px; right: 10px; }
-  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
-  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
+        /* --- 5. VIEWER --- */
+        #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10001; }
+        .viewer-container { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; position: relative; }
+        #imgView { max-width: 85%; max-height: 85vh; cursor: grab; transition: transform 0.1s ease-out; }
 
-  @media (max-width: 600px) { #detail-grid { grid-template-columns: 1fr; } }
-</style>
+        .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; z-index: 10002; opacity: 0.4; padding: 20px; }
+        .ui-btn:hover { opacity: 1; color: #ff0000; }
+        .close-x { top: 10px; right: 10px; }
+        .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
+        .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
+
+        .sys-stats { position: absolute; bottom: 30px; left: 30px; font-size: 9px; color: #333; }
+        .sys-clock { position: absolute; bottom: 30px; right: 30px; font-size: 11px; color: #444; }
+
+        @media (max-width: 600px) { #detail-view { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
 
-<div class="marquee-container">
-  <div class="marquee-text">
+    <!-- HALAMAN GERBANG -->
+    <div id="gate-screen">
+        <img src="logo_antisia.png" class="gate-logo cyber-shake" onclick="openVault()">
+        <div class="menu-item cyber-shake" onclick="openVault()">T-SHIRT</div>
+        <div class="menu-item" style="opacity: 0.1;">SWEATER</div>
+        <div class="sys-stats">COORD: 6.9175° S, 107.6191° E</div>
+        <div class="sys-clock" id="clock-display">00:00:00</div>
+    </div>
+
+    <!-- SISTEM UTAMA -->
+    <div id="main-vault">
+        <div class="marquee-holder">
+            <div class="marquee-content">
+                <span class="marquee-text">ANTISIA INDUSTRIAL STREETWEAR - ACCESS GRANTED - BANDUNG 2026 - VAULT SYSTEM - </span>
+                <span class="marquee-text">ANTISIA INDUSTRIAL STREETWEAR - ACCESS GRANTED - BANDUNG 2026 - VAULT SYSTEM - </span>
+            </div>
+        </div>
+
+        <div id="fixed-nav-shield">
+            <img src="logo_antisia.png" class="sticky-logo cyber-shake" onclick="location.reload()">
+            <div class="nav-controls">
+                <div class="btn-ui cyber-shake" id="btn-return" onclick="closeVault()">[ RETURN TO MENU ]</div>
+                <div class="btn-ui cyber-shake" id="btn-back" onclick="hideGrid()" style="display:none;">[ BACK TO CATALOG ]</div>
+            </div>
+        </div>
+
+        <div class="content-scroll">
+            <div id="catalog-section">
+                <img src="kaos_depan.jpg" class="hero-img" onclick="showGrid()">
+                <div class="btn-explore cyber-shake" onclick="showGrid()">[ EXPLORE DETAIL ]</div>
+                <div class="price">IDR 165.000</div>
+                <a href="https://wa.me/6282137358827" class="btn-order cyber-shake">GET ACCESS (WA)</a>
+            </div>
+
+            <div id="detail-view">
+                <div class="detail-card"><img src="kaos_depan.jpg" class="cyber-shake" onclick="openViewer(0)"></div>
+                <div class="detail-card"><img src="kaos_belakang.jpg" class="cyber-shake" onclick="openViewer(1)"></div>
+                <div class="detail-card"><img src="model_depan.jpg" class="cyber-shake" onclick="openViewer(2)"></div>
+                <div class="detail-card"><img src="model_belakang.jpg" class="cyber-shake" onclick="openViewer(3)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POWER VIEWER -->
+    <div id="viewer">
+        <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
+        <button class="ui-btn arrow-l" onclick="prevImg()">‹</button>
+        <button class="ui-btn arrow-r" onclick="nextImg()">›</button>
+        <div class="viewer-container"><img id="imgView" src=""></div>
+    </div>
+
+    <script>
+        const detailImgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
+        let currentIndex = 0, scale = 1, isDragging = false, startX, startY, translateX = 0, translateY = 0;
+
+        function startClock() {
+            const now = new Date();
+            document.getElementById('clock-display').innerText = 
+                now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0') + ":" + now.getSeconds().toString().padStart(2,'0');
+        }
+        setInterval(startClock, 1000);
+
+        function openVault() {
+            document.getElementById('gate-screen').style.transform = 'translateY(-100%)';
+            document.getElementById('main-vault').style.display = 'block';
+            document.getElementById('fixed-nav-shield').style.display = 'block'; 
+        }
+
+        function closeVault() {
+            document.getElementById('gate-screen').style.transform = 'translateY(0)';
+            setTimeout(() => { 
+                document.getElementById('main-vault').style.display = 'none'; 
+                document.getElementById('fixed-nav-shield').style.display = 'none';
+            }, 800);
+        }
+
+        function showGrid() {
+            document.getElementById('catalog-section').style.display = 'none';
+            document.getElementById('detail-view').style.display = 'grid';
+            document.getElementById('btn-return').style.display = 'none';
+            document.getElementById('btn-back').style.display = 'inline-block';
+            document.getElementById('main-vault').scrollTo(0,0);
+        }
+
+        function hideGrid() {
+            document.getElementById('catalog-section').style.display = 'block';
+            document.getElementById('detail-view').style.display = 'none';
+            document.getElementById('btn-return').style.display = 'inline-block';
+            document.getElementById('btn-back').style.display = 'none';
+        }
+
+        // VIEWER LOGIC
+        const viewer = document.getElementById("viewer");
+        const imgView = document.getElementById("imgView");
+        function openViewer(i) { currentIndex = i; resetZoom(); updateViewerContent(); viewer.style.display = "block"; }
+        function closeViewer() { viewer.style.display = "none"; }
+        function updateViewerContent() { imgView.src = detailImgs[currentIndex]; imgView.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`; }
+        function nextImg() { currentIndex = (currentIndex + 1) % detailImgs.length; resetZoom(); updateViewerContent(); }
+        function prevImg() { currentIndex = (currentIndex - 1 + detailImgs.length) % detailImgs.length; resetZoom(); updateViewerContent(); }
+        function resetZoom() { scale = 1; translateX = 0; translateY = 0; }
+
+        viewer.onwheel = function(e) { e.preventDefault(); scale = e.deltaY > 0 ? Math.max(1, scale - 0.3) : Math.min(5, scale + 0.3); if (scale <= 1) resetZoom(); updateViewerContent(); }
+        viewer.onmousedown = function(e) { if (scale > 1) { isDragging = true; startX = e.clientX - translateX; startY = e.clientY - translateY; } };
+        window.onmousemove = function(e) { if (!isDragging) return; translateX = e.clientX - startX; translateY = e.clientY - startY; updateViewerContent(); };
+        window.onmouseup = function() { isDragging = false; };
+    </script>
+</body>
+</html>
