@@ -61,69 +61,55 @@
     height: auto; 
     display: block; 
     margin: 0 auto; 
-    /* SIHIR PENGHAPUS KOTAK PUTIH */
     mix-blend-mode: screen; 
   }
 
   /* 4. HALAMAN UTAMA */
-  #main-landing { padding: 40px 20px; }
+  #main-landing { padding: 40px 20px 80px 20px; } /* Tambah padding bawah agar tidak kepotong */
   .status-tag { font-size: 10px; color: #ff0000; letter-spacing: 2px; margin-bottom: 15px; display: block; }
   .blink { animation: blinker 1s linear infinite; }
   @keyframes blinker { 50% { opacity: 0; } }
 
-  .hero-img { max-width: 480px; width: 95%; border: 1px solid #222; cursor: pointer; transition: 0.4s; }
+  .hero-img { max-width: 480px; width: 95%; border: 1px solid #222; cursor: pointer; transition: 0.4s; margin-bottom: 20px; }
   .hero-img:hover { border-color: #ff0000; box-shadow: 0 0 30px rgba(255,0,0,0.2); }
   
-  .price-tag { margin-top: 30px; }
+  .price-tag { margin-top: 10px; margin-bottom: 20px; }
   .price-idr { font-size: 30px; font-weight: 900; letter-spacing: 8px; display: block; }
 
-  /* TECHNICAL SPECS */
   .tech-specs {
     max-width: 400px; margin: 25px auto; padding: 15px;
     border: 1px dashed #333; font-size: 11px; color: #666;
     text-align: left; line-height: 1.8;
   }
 
+  /* TOMBOL CHECK OUT */
   .btn-wa {
-    display: inline-block; margin-top: 10px; background-color: transparent; color: #fff;
-    padding: 18px 55px; text-decoration: none; border: 1px solid #333;
+    display: inline-block; margin: 20px auto; background-color: transparent; color: #fff;
+    padding: 18px 55px; text-decoration: none; border: 1px solid #fff;
     font-size: 13px; letter-spacing: 5px; transition: 0.2s; text-transform: uppercase;
+    cursor: pointer;
   }
-  .btn-wa:hover { background: #fff; color: #000; animation: glitch 0.2s infinite; }
-  @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-  }
+  .btn-wa:hover { background: #fff; color: #000; }
 
+  /* TOMBOL EXPLORE */
   .explore-btn {
-    display: block; font-size: 11px; color: #444; margin-top: 45px;
+    display: block; font-size: 11px; color: #555; margin-top: 40px;
     letter-spacing: 10px; cursor: pointer; transition: 0.3s; text-transform: uppercase;
   }
   .explore-btn:hover { color: #fff; }
 
   /* 5. DETAIL GRID */
   #detail-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-  .btn-back { display: none; background: none; border: none; color: #555; padding: 30px; cursor: pointer; font-size: 11px; letter-spacing: 6px; }
+  .btn-back { display: none; background: none; border: none; color: #555; padding: 30px; cursor: pointer; font-size: 11px; letter-spacing: 6px; width: 100%; text-align: center;}
   .product-card { background: #080808; border: 1px solid #151515; padding: 5px; cursor: pointer; }
   .product-card img { width: 100%; display: block; }
 
-  /* 6. VIEWER ZOOM & DRAG */
+  /* 6. VIEWER */
   #viewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; overflow: hidden; }
   .viewer-wrap { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
-  #imgView { 
-    max-width: 85%; max-height: 85vh; cursor: grab; user-select: none; position: absolute;
-    transition: transform 0.1s ease-out;
-  }
-  #imgView:active { cursor: grabbing; }
+  #imgView { max-width: 85%; max-height: 85vh; cursor: grab; user-select: none; position: absolute; transition: transform 0.1s ease-out; }
   .ui-btn { position: fixed; background: none; border: none; color: #fff; font-size: 40px; cursor: pointer; z-index: 10001; padding: 20px; opacity: 0.5; }
-  .ui-btn:hover { opacity: 1; color: #ff0000; }
   .close-x { top: 10px; right: 10px; }
-  .arrow-l { left: 0; top: 50%; transform: translateY(-50%); }
-  .arrow-r { right: 0; top: 50%; transform: translateY(-50%); }
 
   @media (max-width: 600px) { #detail-grid { grid-template-columns: 1fr; } }
 </style>
@@ -142,8 +128,12 @@
 
 <div id="main-landing">
   <span class="status-tag"><span class="blink">●</span> STATUS: LIMITED EDITION RILIS</span>
+  
   <img src="kaos_depan.jpg" class="hero-img" onclick="goToDetails()">
-  <div class="price-tag"><span class="price-idr">IDR 165.000</span></div>
+  
+  <div class="price-tag">
+    <span class="price-idr">IDR 165.000</span>
+  </div>
   
   <div class="tech-specs">
     [MATERIAL] : Cotton Combed 24s Heavyweight<br>
@@ -152,4 +142,55 @@
     [ORIGIN]   : Bandung, West Java / ID
   </div>
 
-  <a href="
+  <!-- TOMBOL SUDAH KEMBALI KAWAN -->
+  <a href="https://wa.me/6282137358827" class="btn-wa" target="_blank">CHECK OUT</a>
+  
+  <span class="explore-btn" onclick="goToDetails()">[ EXPLORE DETAILS ]</span>
+</div>
+
+<button class="btn-back" id="btnBack" onclick="goBack()">← RETURN TO CATALOG</button>
+
+<div id="detail-grid">
+  <div class="product-card" onclick="openViewer(0)"><img src="kaos_depan.jpg"></div>
+  <div class="product-card" onclick="openViewer(1)"><img src="kaos_belakang.jpg"></div>
+  <div class="product-card" onclick="openViewer(2)"><img src="model_depan.jpg"></div>
+  <div class="product-card" onclick="openViewer(3)"><img src="model_belakang.jpg"></div>
+</div>
+
+<div id="viewer">
+  <button class="ui-btn close-x" onclick="closeViewer()">✕</button>
+  <div class="viewer-wrap" id="dragContainer">
+    <img id="imgView" src="">
+  </div>
+</div>
+
+<script>
+  const imgs = ["kaos_depan.jpg", "kaos_belakang.jpg", "model_depan.jpg", "model_belakang.jpg"];
+  
+  function goToDetails() {
+    document.getElementById('main-landing').style.display = 'none';
+    document.getElementById('detail-grid').style.display = 'grid';
+    document.getElementById('btnBack').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+
+  function goBack() {
+    document.getElementById('main-landing').style.display = 'block';
+    document.getElementById('detail-grid').style.display = 'none';
+    document.getElementById('btnBack').style.display = 'none';
+  }
+
+  function openViewer(index) {
+    document.getElementById("imgView").src = imgs[index];
+    document.getElementById("viewer").style.display = "block";
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeViewer() {
+    document.getElementById("viewer").style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+</script>
+
+</body>
+</html>
